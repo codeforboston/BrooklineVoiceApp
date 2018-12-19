@@ -30,7 +30,9 @@ def lambda_handler(event, context):
     logger.debug('Amazon request received: ' + str(event))
 
     model = platform_to_mycity_request(event)
-    return mycity_response_to_platform(execute_request(model))
+    response = mycity_response_to_platform(execute_request(model)) 
+    logger.debug(str(response))
+    return response
 
 
 def platform_to_mycity_request(event):
@@ -140,15 +142,6 @@ def mycity_response_to_platform(mycity_response):
             },
             'shouldEndSession': mycity_response.should_end_session
         }
-
-    if mycity_response.dialog_directive == "Dialog.ElicitSlot":
-        # Add the slot we want to elicit on top of the normal output.
-        logger.debug('Setting elicit slot options.')
-        response["directives"] = [
-            {
-                "type": mycity_response.dialog_directive,
-                "slotToElicit": mycity_response.slot_to_elicit
-            }]
 
     result = {
         'version': '1.0',
