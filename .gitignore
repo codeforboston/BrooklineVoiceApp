@@ -1,3 +1,6 @@
 .vscode
 temp/
 lambda_function.zip
+
+# pycharm config
+.idea/*
