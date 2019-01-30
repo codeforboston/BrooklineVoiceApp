@@ -24,16 +24,63 @@
                     "samples": []
                 },
                 {
-                    "name": "HelloIntent",
-                    "slots": [],
+                    "name": "PoliceStationIntent",
+                    "slots": [
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "samples": [
+                                "I live at {Address}",
+                                "I am at {Address}",
+                                "{Address}"
+                            ]
+                        }
+                    ],
                     "samples": [
-                        "Hello",
-                        "Are you there",
-                        "Hi Brookline"
+                        "closest police",
+                        "police near me",
+                        "police station near me",
+                        "police station",
+                        "Closest police stations",
+                        "Where is the closest Police Station",
+			"Closest police station to {Address}",
+			"police station near {Address}",
+			"Where is the closest police station to {Address}"
                     ]
                 }
             ],
             "types": []
-        }
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "PoliceStationIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.AskAddress"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.AskAddress",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is your address?"
+                    }
+                ]
+            }
+        ]
     }
 }
