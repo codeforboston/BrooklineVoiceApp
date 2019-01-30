@@ -31,7 +31,7 @@ def find_closest_police_station(mycity_request):
     response.session_attributes = mycity_request.session_attributes
     current_address = \
             mycity_request.session_attributes.get(intent_constants.CURRENT_ADDRESS_KEY)
-    if current_address == None: 
+    if current_address is None: 
         response.dialog_directive = "Delegate"
     else:
         response.output_speech = _get_output_speech_for_address(current_address)
@@ -40,17 +40,3 @@ def find_closest_police_station(mycity_request):
 
 
 
-def _get_output_speech_for_address(address):
-    """
-    Gets the API response and builds an output speech string
-
-    :param address: Current address
-    :return: Output speech string
-    """
-
-    logger.debug('Getting response for address ' + str(address))
-    response = get_nearest_police_station_response(address)
-    first_feature = response[FEATURES_PATH][0]
-    facility_name = first_feature[ATTRIBUTES_PATH][NAME_PATH]
-    facility_address = first_feature[ATTRIBUTES_PATH][FULLADDR_PATH]
-    return OUTPUT_SPEECH_TEMPLATE.format(facility_name, facility_address)
