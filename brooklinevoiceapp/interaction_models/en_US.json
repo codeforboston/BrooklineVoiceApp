@@ -42,7 +42,10 @@
                         "police station near me",
                         "police station",
                         "Closest police stations",
-                        "Where is the closest Police Stations"
+                        "Where is the closest Police Station",
+			"Closest police station to {Address}",
+			"police station near {Address}",
+			"Where is the closest police station to {Address}"
                     ]
                 }
             ],

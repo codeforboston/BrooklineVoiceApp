@@ -20,7 +20,7 @@ def find_closest_police_station(mycity_request):
     response.session_attributes = mycity_request.session_attributes
     current_address = \
             mycity_request.session_attributes.get(intent_constants.CURRENT_ADDRESS_KEY)
-    if current_address == None: 
+    if current_address is None: 
         response.dialog_directive = "Delegate"
     else:
         response.output_speech = "The closest police station is in Coolidge Corner"

@@ -29,7 +29,7 @@ def on_intent(mycity_request):
 
     :param mycity_request: MyCityRequestDataModel object with
         request_type IntentRequest
-    :return: MyCityRequestDataModel object corresponding to the intent_name
+    :return: MyCityResponseDataModel object corresponding to the intent_name
     :raises: ValueError
     """
 
