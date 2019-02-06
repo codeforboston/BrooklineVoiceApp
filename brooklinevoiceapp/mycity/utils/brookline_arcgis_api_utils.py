@@ -31,7 +31,7 @@ Y_PATH = "y"
 FULL_ADDR_PATH = "FULLADDR"
 
 
-def get_nearest_police_station_response(address):
+def get_nearest_police_station_json(address):
     """
     Queries the Brookline arcgis server for the nearest police station
 
@@ -71,7 +71,6 @@ def geocode_address(address):
     candidate = _get_first_address_candidate(address)
     location = candidate[LOCATION_PATH]
 
-    logger.debug('Got location for address: ' + str(location))
     return [location[X_PATH], location[Y_PATH]]
 
 
@@ -93,5 +92,5 @@ def _get_first_address_candidate(address):
     with requests.Session() as session:
         response = session.get(GEOCODE_URL, params=url_params)
 
-    logger.debug('Got response: ' + str(response))
+    logger.debug('Got address candidate response: ' + str(response))
     return response.json()[CANDIDATES_PATH][0]

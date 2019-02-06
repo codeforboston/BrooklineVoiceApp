@@ -2,7 +2,7 @@ from mycity.utils.address_utils import set_address_in_session
 from mycity.intents import intent_constants
 from mycity.mycity_response_data_model import MyCityResponseDataModel
 from mycity.utils.brookline_arcgis_api_utils import \
-    get_nearest_police_station_response
+    get_nearest_police_station_json
 
 import logging
 
@@ -48,7 +48,7 @@ def _get_output_speech_for_address(address):
     """
 
     logger.debug('Getting response for address ' + str(address))
-    response = get_nearest_police_station_response(address)
+    response = get_nearest_police_station_json(address)
     first_feature = response[FEATURES_PATH][0]
     facility_name = first_feature[ATTRIBUTES_PATH][NAME_PATH]
     facility_address = first_feature[ATTRIBUTES_PATH][FULLADDR_PATH]
