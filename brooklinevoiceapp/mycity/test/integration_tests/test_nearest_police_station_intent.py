@@ -11,6 +11,8 @@ import mycity.intents.police_station_intent as ps_intent
 
 MOCK_RESPONSE = test_constants.GET_POLICE_STATION_API_MOCK
 
+EXPECTED_RESPONSE = ps_intent.NO_RESULTS_RESPONSE
+
 FEATURES = ps_intent.FEATURES_PATH
 ATTRIBUTES = ps_intent.ATTRIBUTES_PATH
 NAME = ps_intent.NAME_PATH
@@ -34,12 +36,27 @@ class PoliceStationTestCase(mix_ins.RepromptTextTestMixIn,
                 ('mycity.intents.police_station_intent.'
                  'get_nearest_police_station_json'),
                 return_value=test_constants.GET_POLICE_STATION_API_MOCK)
+
+    def tearDown(self):
+        super().tearDown()
+
+
+    def testResponseContainsNameAndFullAddress(self):
         self.get_nearest_police_station_json.start()
         response = self.controller.on_intent(self.request)
         for feature in MOCK_RESPONSE[FEATURES]:
             self.assertIn(feature[ATTRIBUTES][FULLADDR], response.output_speech)
             self.assertIn(feature[ATTRIBUTES][NAME], response.output_speech)
+        self.get_nearest_police_station_json.stop()
 
-    def tearDown(self):
-        super().tearDown()
+
+    def testNoFeatureResults(self):
+        self.get_nearest_police_station_json= \
+            mock.patch(
+                ('mycity.intents.police_station_intent.'
+                 'get_nearest_police_station_json'),
+                return_value=test_constants.NO_RESULTS_GET_POLICE_STATION_API_MOCK)
+        self.get_nearest_police_station_json.start()
+        response = self.controller.on_intent(self.request)
+        self.assertEqual(response.output_speech, EXPECTED_RESPONSE)
         self.get_nearest_police_station_json.stop()
