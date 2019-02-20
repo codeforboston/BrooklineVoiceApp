@@ -11,7 +11,7 @@ import mycity.intents.police_station_intent as ps_intent
 
 MOCK_RESPONSE = test_constants.GET_POLICE_STATION_API_MOCK
 
-EXPECTED_RESPONSE = ps_intent.NO_RESULTS_RESPONSE
+NO_RESULTS_RESPONSE = ps_intent.NO_RESULTS_RESPONSE
 
 FEATURES = ps_intent.FEATURES_PATH
 ATTRIBUTES = ps_intent.ATTRIBUTES_PATH
@@ -58,5 +58,5 @@ class PoliceStationTestCase(mix_ins.RepromptTextTestMixIn,
                 return_value=test_constants.NO_RESULTS_GET_POLICE_STATION_API_MOCK)
         self.get_nearest_police_station_json.start()
         response = self.controller.on_intent(self.request)
-        self.assertEqual(response.output_speech, EXPECTED_RESPONSE)
+        self.assertEqual(response.output_speech, NO_RESULTS_RESPONSE)
         self.get_nearest_police_station_json.stop()
