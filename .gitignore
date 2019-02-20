@@ -21,8 +21,6 @@ include/*
 
 pip-selfcheck.json
 
-selenium/*
-
 # Logs
 logs
 *.log
@@ -87,14 +85,6 @@ typings/
 
 # pycharm config
 .idea/*
-
-# python modules
-BostonData/lambda_function/certifi*
-BostonData/lambda_function/chardet*
-BostonData/lambda_function/idna*
-BostonData/lambda_function/requests*
-BostonData/lambda_function/street*
-BostonData/lambda_function/urllib3*
 
 # pycache and pyc files
 
