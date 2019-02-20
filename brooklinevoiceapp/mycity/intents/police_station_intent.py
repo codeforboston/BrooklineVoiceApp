@@ -8,6 +8,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+CARD_TITLE_POLICE_STATION = "Nearest Police Station"
+
 OUTPUT_SPEECH_TEMPLATE = \
     "The nearest police station to you is {} located at {}."
 
@@ -28,13 +30,16 @@ def find_closest_police_station(mycity_request):
 
     response = MyCityResponseDataModel()
     set_address_in_session(mycity_request)
-    response.session_attributes = mycity_request.session_attributes
     current_address = \
             mycity_request.session_attributes.get(intent_constants.CURRENT_ADDRESS_KEY)
     if current_address is None: 
         response.dialog_directive = "Delegate"
     else:
         response.output_speech = _get_output_speech_for_address(current_address)
+
+    response.reprompt_text = None
+    response.session_attributes = mycity_request.session_attributes
+    response.card_title = CARD_TITLE_POLICE_STATION
 
     return response
 
