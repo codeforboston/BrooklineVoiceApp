@@ -48,3 +48,24 @@ GET_POLICE_STATION_API_MOCK = {
     ]
 }
 
+NO_RESULTS_GET_POLICE_STATION_API_MOCK = {
+    "displayFieldName": "NAME",
+    "fieldAliases": {
+        "OBJECTID": "OBJECTID",
+        "FACILITYID": "Facility Identifier",
+        "NAME": "Name of Facility",
+        "OWNER": "Owner Name",
+        "OWNTYPE": "Owner Type",
+        "SUBTYPEFIELD": "Subtype Field",
+        "FEATURECODE": "Feature Code",
+        "FULLADDR": "Full Address",
+        "AGENCYURL": "Website",
+        "OPERDAYS": "Operational Days",
+        "OPERHOURS": "Operational Hours",
+        "CONTACT": "Contact Name",
+        "PHONE": "Phone",
+        "EMAIL": "Email"
+    },
+    "features": []
+}
+
