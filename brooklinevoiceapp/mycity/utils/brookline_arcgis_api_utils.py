@@ -1,5 +1,6 @@
 import requests
 import logging
+from enum import Enum
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +23,8 @@ GEOCODE_URL = \
     "http://gisweb.brooklinema.gov/arcgis/rest/services/Composite_WhereAmI/GeocodeServer/findAddressCandidates"
 
 
-POLICE_STATION_ID = 10
+class MapFeatureID(Enum):
+    POLICE_STATION = 10
 
 CANDIDATES_PATH = "candidates"
 LOCATION_PATH = "location"
@@ -39,8 +41,23 @@ def get_nearest_police_station_json(address):
     :return: Json data object response
     """
     logger.debug('Finding closest police station for address: ' + str(address))
+    return get_nearest_feature_json(address, MapFeatureID.POLICE_STATION)
 
-    url = MAPSERVER_URL.format(POLICE_STATION_ID)
+
+def get_nearest_feature_json(address, map_feature_id):
+    """
+    Gets the nearest location of provided map feature from Brookline argis server
+
+    :param address: Adress string to query
+    :param map_feature_id: MapFeatureID to query the server for
+    :return: Json data object response
+    """
+
+
+    if not isinstance(map_feature_id, MapFeatureID):
+        raise Exception('get_nearest_feature_json() called with invalid feature ID')
+        
+    url = MAPSERVER_URL.format(map_feature_id.value)
     headers = {CONTENT_TYPE_HEADER: "application/x-www-form-urlencoded"}
     payload = {
         F_PARAM: "json",
