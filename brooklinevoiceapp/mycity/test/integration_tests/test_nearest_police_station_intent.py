@@ -3,6 +3,7 @@ import mycity.test.test_constants as test_constants
 import mycity.test.integration_tests.intent_base_case as base_case
 import mycity.test.integration_tests.intent_test_mixins as mix_ins
 import mycity.intents.police_station_intent as ps_intent
+import mycity.intents.intent_constants as intent_constants
 
 
 ############################################
@@ -11,7 +12,7 @@ import mycity.intents.police_station_intent as ps_intent
 
 MOCK_RESPONSE = test_constants.GET_POLICE_STATION_API_MOCK
 
-NO_RESULTS_RESPONSE = ps_intent.NO_RESULTS_RESPONSE
+NO_RESULTS_RESPONSE = intent_constants.NO_RESULTS_RESPONSE
 
 FEATURES = ps_intent.FEATURES_PATH
 ATTRIBUTES = ps_intent.ATTRIBUTES_PATH
