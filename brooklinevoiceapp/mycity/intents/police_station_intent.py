@@ -12,8 +12,6 @@ CARD_TITLE_POLICE_STATION = "Nearest Police Station"
 
 OUTPUT_SPEECH_TEMPLATE = \
     "The nearest police station to you is {} located at {}."
-NO_RESULTS_RESPONSE = \
-    "Hmm we found no results for that address."
 
 FEATURES_PATH = "features"
 ATTRIBUTES_PATH = "attributes"
@@ -61,6 +59,6 @@ def _get_output_speech_for_address(address):
         facility_name = first_feature[ATTRIBUTES_PATH][NAME_PATH]
         facility_address = first_feature[ATTRIBUTES_PATH][FULLADDR_PATH]
     except IndexError:
-        return NO_RESULTS_RESPONSE
+        return intent_constants.NO_RESULTS_RESPONSE
 
     return OUTPUT_SPEECH_TEMPLATE.format(facility_name, facility_address)

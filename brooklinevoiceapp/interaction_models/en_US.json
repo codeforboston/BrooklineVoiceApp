@@ -47,6 +47,34 @@
                         "police station near {Address}",
                         "Where is the closest police station to {Address}"
                     ]
+                },
+                {
+                    "name": "TrashDayIntent",
+                    "slots": [
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "samples": [
+                                "The address is {Address}",
+                                "My address is {Address}",
+                                "{Address}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "garbage day",
+                        "trash day",
+                        "when is recycling collected {Address}",
+                        "when is trash collected at {Address}",
+                        "when is garbage picked up at {Address}",
+                        "when is garbage day at {Address}",
+                        "garbage day at {Address}",
+                        "trash day at {Address}",
+                        "when is recycling day at {Address}",
+                        "when is recycling picked up at {Address}",
+                        "when is trash picked up at {Address}",
+                        "When is trash day at {Address}"
+                    ]
                 }
             ],
             "types": []
@@ -68,12 +96,39 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "TrashDayIntent",
+                    "delegationStrategy": "SKILL_RESPONSE",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1200741587813.991075352244"
+                            }
+                        }
+                    ]
                 }
-            ]
+            ],
+            "delegationStrategy": "SKILL_RESPONSE"
         },
         "prompts": [
             {
                 "id": "Elicit.Slot.AskAddress",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is your address?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1200741587813.991075352244",
                 "variations": [
                     {
                         "type": "PlainText",

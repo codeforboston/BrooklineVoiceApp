@@ -4,6 +4,7 @@ Dispatches MyCityRequestsObjects to the appropriate Brookline intent
 
 from mycity.mycity_response_data_model import MyCityResponseDataModel
 from mycity.intents.police_station_intent import find_closest_police_station
+from mycity.intents.trash_day_intent import get_trash_pickup_info
 import logging
 
 logger = logging.getLogger(__name__)
@@ -102,6 +103,8 @@ def on_intent(mycity_request):
 
     if mycity_request.intent_name == "PoliceStationIntent":
         return find_closest_police_station(mycity_request)
+    elif mycity_request.intent_name == "TrashDayIntent":
+        return get_trash_pickup_info(mycity_request)
     else:
         raise ValueError("Invalid Intent")
         
