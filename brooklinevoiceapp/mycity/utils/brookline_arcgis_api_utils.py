@@ -5,7 +5,6 @@ import logging
 import requests
 import logging
 import typing
-import copy
 
 
 logger = logging.getLogger(__name__)
@@ -81,7 +80,7 @@ def geocode_address(address: str,
     """
     try:
         candidate, spatial_reference = _get_first_address_candidate(address)
-        location = copy.deepcopy(candidate[LOCATION_PATH])
+        location = candidate[LOCATION_PATH]
         location[SPATIAL_REFERENCE_PATH] = spatial_reference
     except IndexError:
         return {}

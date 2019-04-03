@@ -69,6 +69,16 @@ NO_RESULTS_GET_POLICE_STATION_API_MOCK = {
     "features": []
 }
 
+GEOCODE_MOCK = {
+    "spatialReference": {
+        "wkid": 4326,
+        "latestWkid": 4326
+    },
+    "x": -71.120614336337198,
+    "y": 42.334020535512529,
+    "z": 0
+}
+
 LOCATION_MOCK = {
     "x": -71.120614336337198,
     "y": 42.334020535512529,
@@ -195,3 +205,4 @@ NO_RESPONSE_TRASH_PICKUP_API_MOCK = {
     },
     "features": []
 }
+

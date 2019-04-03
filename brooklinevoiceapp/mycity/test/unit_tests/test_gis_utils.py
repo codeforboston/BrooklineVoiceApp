@@ -11,7 +11,7 @@ SPACIAL = utils.SPATIAL_REFERENCE_PATH
 class GISUtilitiesTestCase(base.BaseTestCase):
 
     def test_get_first_address_candidate(self):
-        expected_candidate = test_constants.ADDRESS_CANDIDATE_MOCK
+        expected_candidate = copy.deepcopy(test_constants.ADDRESS_CANDIDATE_MOCK)
         expected_spacial = test_constants.SPACIAL_REFERENCE_MOCK
         mock_requests = self.build_requests_stub(get_status=200,
              get_data=test_constants.GET_ADDRESS_CANDIDATES_API_MOCK)
@@ -20,9 +20,9 @@ class GISUtilitiesTestCase(base.BaseTestCase):
         self.assertEqual(expected_spacial, spacial_result)
 
     def test_geocode_address(self):
-        expected_result = copy.deepcopy(test_constants.LOCATION_MOCK)
-        expected_result[SPACIAL] = test_constants.SPACIAL_REFERENCE_MOCK
-        mock_call = mock.MagicMock(return_value=[test_constants.ADDRESS_CANDIDATE_MOCK, test_constants.SPACIAL_REFERENCE_MOCK])
+        expected_result = test_constants.GEOCODE_MOCK
+        mock_call = mock.MagicMock(return_value=[copy.deepcopy(test_constants.ADDRESS_CANDIDATE_MOCK),
+                                                 test_constants.SPACIAL_REFERENCE_MOCK])
         result = utils.geocode_address(self.test_address, mock_call)
         self.assertEqual(expected_result, result)
 

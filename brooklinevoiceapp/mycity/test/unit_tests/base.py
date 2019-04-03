@@ -37,3 +37,4 @@ class BaseTestCase(unittest.TestCase):
         requests_stub.Session.get = mock.MagicMock(return_value=ResponseStub(get_status, get_data))
         requests_stub.Session.post = mock.MagicMock(return_value=ResponseStub(post_status, post_data))
         return requests_stub
+
