@@ -6,6 +6,7 @@ import brookline_controller as my_controller
 import mycity.mycity_request_data_model as my_req
 
 
+# Mock class for the API response
 class ResponseStub:
 
     def __init__(self, status_code: int, response_data: typing.Dict = {}):
@@ -34,6 +35,7 @@ class BaseTestCase(unittest.TestCase):
             get_data=None,
             post_data=None):
         requests_stub = requests
+        # replace request Session REST methods with mocks
         requests_stub.Session.get = mock.MagicMock(return_value=ResponseStub(get_status, get_data))
         requests_stub.Session.post = mock.MagicMock(return_value=ResponseStub(post_status, post_data))
         return requests_stub

@@ -7,7 +7,6 @@ import copy
 
 SPACIAL = utils.SPATIAL_REFERENCE_PATH
 
-
 class GISUtilitiesTestCase(base.BaseTestCase):
 
     def test_get_first_address_candidate(self):
