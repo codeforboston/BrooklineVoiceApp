@@ -1,7 +1,11 @@
 import unittest
+import requests
+import typing
+import unittest.mock as mock
 import brookline_controller as my_controller
 import mycity.intents.intent_constants as intent_constants
 import mycity.mycity_request_data_model as req
+import mycity.utils.brookline_arcgis_api_utils as utils
 
 
 ###############################################################################
@@ -11,6 +15,18 @@ import mycity.mycity_request_data_model as req
 # NOTE: Assumes that address has already been set.                            #
 ###############################################################################
 
+
+# Mock class for the API response
+class ResponseStub:
+
+    def __init__(self, status_code: int, response_data: typing.Dict = {}):
+        self.status_code = status_code
+        self.response_data = response_data
+
+    def json(self):
+        return self.response_data
+
+
 class IntentBaseCase(unittest.TestCase):
 
     intent_to_test = None
@@ -18,6 +34,7 @@ class IntentBaseCase(unittest.TestCase):
     returns_reprompt_text = False
 
     def setUp(self):
+        self._requests_original = utils.requests
         self.controller = my_controller
         self.request = req.MyCityRequestDataModel()
         key = intent_constants.CURRENT_ADDRESS_KEY
@@ -27,4 +44,16 @@ class IntentBaseCase(unittest.TestCase):
     def tearDown(self):
         self.controller = None
         self.request = None
+        utils.requests = self._requests_original
 
+    def mock_requests(
+            self,
+            get_status=200,
+            post_status=200,
+            get_data=None,
+            post_data=None):
+        mock_requests = requests
+        # replace request Session REST methods with mocks
+        mock_requests.Session.get = mock.MagicMock(return_value=ResponseStub(get_status, get_data))
+        mock_requests.Session.post = mock.MagicMock(return_value=ResponseStub(post_status, post_data))
+        utils.requests = mock_requests
