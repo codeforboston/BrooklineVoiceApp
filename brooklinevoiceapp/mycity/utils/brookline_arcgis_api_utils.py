@@ -30,6 +30,7 @@ class MapFeatureID(Enum):
     """Brookline GIS feature types"""
     POLICE_STATION = 10
     TRASH_DAY = 12
+    LIBRARY = 9
 
 CANDIDATES_PATH = "candidates"
 LOCATION_PATH = "location"
