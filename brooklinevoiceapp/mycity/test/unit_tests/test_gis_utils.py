@@ -26,8 +26,11 @@ class GISUtilitiesTestCase(base.BaseTestCase):
         self.assertEqual(expected_result, result)
 
     def test_get_nearest_police_station_json(self):
-        mock_call = mock.MagicMock(return_value=test_constants.GET_POLICE_STATION_API_MOCK)
-        result = utils.get_nearest_police_station_json(self.test_address, mock_call)
+        mock_nearest_feature_call = mock.MagicMock(return_value=test_constants.GET_POLICE_STATION_API_MOCK)
+        mock_geocode_call = mock.MagicMock(return_value=test_constants.LOCATION_MOCK)
+        result = utils.get_nearest_police_station_json(self.test_address,
+                                                       _get_nearest_feature_json=mock_nearest_feature_call,
+                                                       _geocode_address=mock_geocode_call)
         self.assertEqual(result, test_constants.GET_POLICE_STATION_API_MOCK)
 
     def test_get_trash_day_json(self):
