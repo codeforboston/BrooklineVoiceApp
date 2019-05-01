@@ -51,7 +51,6 @@ def _get_output_speech_for_address(address):
 
     logger.debug('Getting response for address ' + str(address))
     response = get_nearest_police_station_json(address)
-    logger.debug('Got response ' + str(response))
     try:
         first_feature = response[FEATURES_PATH][0]
         facility_name = first_feature[ATTRIBUTES_PATH][NAME_PATH]
