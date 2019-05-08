@@ -30,6 +30,7 @@ def execute_request(mycity_request):
         response = MyCityResponseDataModel()
         response.output_speech = "Hello from Brookline! We do not support that yet"
 
+    response.session_attributes = mycity_request.session_attributes
     return response
 
 

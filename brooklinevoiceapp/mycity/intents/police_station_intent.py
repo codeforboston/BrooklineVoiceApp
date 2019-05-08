@@ -36,10 +36,7 @@ def find_closest_police_station(mycity_request):
         response.dialog_directive = "Delegate"
     else:
         response.output_speech = _get_output_speech_for_address(current_address)
-
-    response.reprompt_text = None
-    response.session_attributes = mycity_request.session_attributes
-    response.card_title = CARD_TITLE_POLICE_STATION
+        response.card_title = CARD_TITLE_POLICE_STATION
 
     return response
 
