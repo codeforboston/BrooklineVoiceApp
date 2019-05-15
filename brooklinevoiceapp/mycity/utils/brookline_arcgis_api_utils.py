@@ -32,6 +32,7 @@ class MapFeatureID(Enum):
     """Brookline GIS feature types"""
     POLICE_STATION = 10
     TRASH_DAY = 12
+    POLLING_LOCATION = 21
 
 
 CANDIDATES_PATH = "candidates"
@@ -139,6 +140,26 @@ def get_nearest_police_station_json(address: str,
     coordinates = [location['x'], location['y']]
     custom_geocode = lambda arg: coordinates
     return _get_nearest_feature_json(address, MapFeatureID.POLICE_STATION,
+                                     _geocode_address=custom_geocode)
+
+
+
+def get_polling_locations(address: str,
+                          _get_nearest_feature_json: callable = get_nearest_feature_json,
+                          _geocode_address: callable = geocode_address) -> object:
+    """
+    Queries the Brookline arcgis server for nearby polling stations
+
+    :param address: Address string to query
+    :param _get_nearest_feature_json: Callable to get the arcgis server response
+    :param _geocode_address: Callable to transform string address to [x,y]
+    :return: Json data object response
+    """
+    logger.debug('Finding polling stations for address: ' + str(address))
+    location = _geocode_address(address)
+    coordinates = [location['x'], location['y']]
+    custom_geocode = lambda arg: coordinates
+    return _get_nearest_feature_json(address, MapFeatureID.POLLING_LOCATION,
                                      _geocode_address=custom_geocode)
 
 
