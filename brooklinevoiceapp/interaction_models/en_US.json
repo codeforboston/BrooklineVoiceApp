@@ -75,9 +75,102 @@
                         "when is trash picked up at {Address}",
                         "When is trash day at {Address}"
                     ]
+                },
+                {
+                    "name": "PollingStationIntent",
+                    "slots": [
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "samples": [
+                                "The address is {Address}",
+                                "My address is {Address}",
+                                "{Address}"
+                            ]
+                        },
+                        {
+                            "name": "number_requests",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "Nearest polling stations",
+                        "Nearest polling stations to {Address}",
+                        "Nearest {number_requests} polling stations",
+                        "Nearest {number_requests} polling stations to {Address}",
+                        "Ask for the {number_requests} closest polling stations",
+                        "Ask for the closest polling stations",
+                        "Ask for the {number_requests} nearest polling stations",
+                        "Ask for the polling stations",
+                        "Say the {number_requests} closest polling stations",
+                        "Say the closest polling stations",
+                        "Say the nearest {number_requests} polling stations",
+                        "Say the nearest polling stations",
+                        "Say the polling stations",
+                        "Tell me the {number_requests} closest polling stations",
+                        "Tell me the closest polling stations",
+                        "Tell me the closest polling stations {Address}",
+                        "Tell me the nearest polling stations",
+                        "Tell me the nearest polling stations to {Address}",
+                        "Tell me {number_requests} polling stations",
+                        "Tell me the polling stations",
+                        "Request {number_requests} closest polling stations",
+                        "Request closest polling stations",
+                        "Request {number_requests} nearest polling stations",
+                        "Request nearest polling stations",
+                        "Request the polling stations",
+                        "report {number_requests} closest polling stations",
+                        "report closest polling stations",
+                        "report nearest {number_requests} polling stations",
+                        "report nearest polling stations",
+                        "report the polling stations",
+                        "I need the {number_requests} closest polling stations",
+                        "I need the closest polling stations",
+                        "I need the {number_requests} nearest polling stations",
+                        "I need the nearest polling stations",
+                        "I need the polling stations",
+                        "I want the closest polling stations",
+                        "I want polling stations",
+                        "I want nearest polling stations",
+                        "I want the {number_requests} nearest polling stations",
+                        "I want the nearest polling stations",
+                        "I want the polling stations",
+                        "Give the {number_requests} closest polling stations",
+                        "Give the {number_requests} nearest polling stations",
+                        "Give the closest polling stations",
+                        "Give the polling stations",
+                        "Give me the polling stations",
+                        "Give me the polling stations closest to {Address}",
+                        "Give me the {number_requests} closest polling stations",
+                        "Give me the {number_requests} nearest polling stations",
+                        "Give me the nearest {number_requests} polling stations",
+                        "Give me the nearest polling stations",
+                        "Get me the {number_requests} closest polling stations",
+                        "Get me the closest polling stations",
+                        "Get me the closest polling stations to {Address}",
+                        "Get {number_requests} nearby polling stations",
+                        "Get the nearest polling stations",
+                        "Get me the nearest {number_requests} polling stations",
+                        "Get me the closest {number_requests} polling stations",
+                        "Get me the nearest polling stations",
+                        "Get me the polling stations",
+                        "What are polling stations",
+                        "What's the {number_requests} nearby polling stations",
+                        "What's the {number_requests} polling stations near me",
+                        "What's the closest polling stations",
+                        "What's the nearest {number_requests} polling stations",
+                        "What's the nearest polling stations",
+                        "What polling stations",
+                        "What's the polling stations",
+                        "Give me {number_requests} polling stations",
+                        "Give me {number_requests} polling stations at {Address}",
+                        "{number_requests} polling stations near me",
+                        "{number_requests} polling stations",
+                        "Read me {number_requests} polling stations requests",
+                        "Polling stations request"
+                    ]
                 }
-            ],
-            "types": []
+            ]
         },
         "dialog": {
             "intents": [
@@ -109,7 +202,24 @@
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": "Elicit.Slot.1200741587813.991075352244"
+                                "elicitation": "Elicit.Slot.AskAddress"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "PollingStationIntent",
+                    "delegationStrategy": "SKILL_RESPONSE",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.AskAddress"
                             }
                         }
                     ]
@@ -120,15 +230,6 @@
         "prompts": [
             {
                 "id": "Elicit.Slot.AskAddress",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What is your address?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.1200741587813.991075352244",
                 "variations": [
                     {
                         "type": "PlainText",

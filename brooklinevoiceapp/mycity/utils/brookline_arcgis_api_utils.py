@@ -144,9 +144,9 @@ def get_nearest_police_station_json(address: str,
 
 
 
-def get_polling_locations(address: str,
-                          _get_nearest_feature_json: callable = get_nearest_feature_json,
-                          _geocode_address: callable = geocode_address) -> object:
+def get_polling_locations_json(address: str,
+    _get_nearest_feature_json: callable = get_nearest_feature_json,
+    _geocode_address: callable = geocode_address) -> object:
     """
     Queries the Brookline arcgis server for nearby polling stations
 

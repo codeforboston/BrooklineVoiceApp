@@ -207,11 +207,30 @@ NO_RESPONSE_TRASH_PICKUP_API_MOCK = {
 }
 
 GET_POLLING_LOCATIONS_API_MOCK = {
+    "displayFieldName": "NAME",
+    "fieldAliases": {
+        "OBJECTID": "OBJECTID",
+        "NAME": "Polling Location",
+        "POLLINGID": "Precinct",
+        "FULLADD": "Address",
+        "CITY": "City",
+        "STATE": "State",
+        "OPERHOURS": "Polling Hours",
+        "HANDICAP": "Handicap Accessible",
+        "NEXTELECT": "Next Election Date",
+        "REGDATE": "Voter Registration Deadline",
+        "CONTACT": "Contact Name",
+        "PHONE": "Phone",
+        "EMAIL": "Email",
+        "LASTUPDATE": "Last Update Date",
+        "LASTEDITOR": "Last Editor",
+        "PRECINCT": "PRECINCT"
+    },
     "features": [
         {
             "attributes": {
                 "OBJECTID": 1,
-                "NAME": "Young Israel of Brookline, 62 Green St (Side En",
+                "NAME": "Young Israel of Brookline, 62 Green St",
                 "POLLINGID": "8",
                 "FULLADD": "345 HARVARD ST",
                 "CITY": "Brookline",
@@ -265,3 +284,25 @@ GET_POLLING_LOCATIONS_API_MOCK = {
     ]
 }
 
+NO_RESPONSE_POLLING_LOCATIONS_API_MOCK = {
+    "displayFieldName": "NAME",
+    "fieldAliases": {
+        "OBJECTID": "OBJECTID",
+        "NAME": "Polling Location",
+        "POLLINGID": "Precinct",
+        "FULLADD": "Address",
+        "CITY": "City",
+        "STATE": "State",
+        "OPERHOURS": "Polling Hours",
+        "HANDICAP": "Handicap Accessible",
+        "NEXTELECT": "Next Election Date",
+        "REGDATE": "Voter Registration Deadline",
+        "CONTACT": "Contact Name",
+        "PHONE": "Phone",
+        "EMAIL": "Email",
+        "LASTUPDATE": "Last Update Date",
+        "LASTEDITOR": "Last Editor",
+        "PRECINCT": "PRECINCT"
+    },
+    "features": []
+}
