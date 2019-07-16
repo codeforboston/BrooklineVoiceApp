@@ -19,7 +19,7 @@ def lambda_handler(event, context):
     :param event: JSON object containing the raw request information received
         from the Alexa service platform
     :param context: a LambdaContext object containing runtime info
-    :return: JSON response object to be sent to the Alexa service platform 
+    :return: JSON response object to be sent to the Alexa service platform
     """
     # Handle logger configuration here at the first use of the logger
     while len(logging.root.handlers) > 0:
@@ -31,7 +31,7 @@ def lambda_handler(event, context):
     logger.debug('Amazon request received: ' + str(event))
 
     model = platform_to_mycity_request(event)
-    response = mycity_response_to_platform(execute_request(model)) 
+    response = mycity_response_to_platform(execute_request(model))
     logger.debug(str(response))
     return response
 
@@ -55,7 +55,7 @@ def platform_to_mycity_request(event):
     system_context = event['context']['System']
     mycity_request.device_id = system_context.get('device', {}).get('deviceId', "unknown")
     mycity_request.api_access_token = system_context.get('apiAccessToken', "none")
-    
+
     if 'attributes' in event['session']:
         mycity_request.session_attributes = event['session']['attributes']
     else:
@@ -98,33 +98,33 @@ def mycity_response_to_platform(mycity_response):
                 'directives': [
                     mycity_response.dialog_directive
                 ],
-                'card' : {
+                'card': {
                     'type': 'Simple',
                     'title': str(mycity_response.card_title),
                     'content': str(mycity_response.output_speech)
-                    }
+                }
             }
-        else: 
+        else:
             response = {
                 'outputSpeech': {
                     'type': 'PlainText',
                     'text': mycity_response.output_speech
-             },
+                },
                 'card': {
                     'type': 'Simple',
                     'title': str(mycity_response.card_title),
                     'content': str(mycity_response.output_speech)
                 },
                 'reprompt': {
-                 'outputSpeech': {
+                    'outputSpeech': {
                         'type': 'PlainText',
                         'text': mycity_response.reprompt_text
-                 }
-             },
+                    }
+                },
                 'shouldEndSession': mycity_response.should_end_session,
-                'directives' : [
+                'directives': [
                     mycity_response.dialog_directive
-                    ]
+                ]
             }
     else:
         response = {

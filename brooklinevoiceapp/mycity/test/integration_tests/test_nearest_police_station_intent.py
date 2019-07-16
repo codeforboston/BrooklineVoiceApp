@@ -20,10 +20,10 @@ ATTRIBUTES = ps_intent.ATTRIBUTES_PATH
 NAME = ps_intent.NAME_PATH
 FULLADDR = ps_intent.FULLADDR_PATH
 
-class PoliceStationTestCase(mix_ins.RepromptTextTestMixIn,
-                             mix_ins.CardTitleTestMixIn,
-                             base_case.IntentBaseCase):
 
+class PoliceStationTestCase(mix_ins.RepromptTextTestMixIn,
+                            mix_ins.CardTitleTestMixIn,
+                            base_case.IntentBaseCase):
     intent_to_test = "PoliceStationIntent"
     expected_title = ps_intent.CARD_TITLE_POLICE_STATION
     returns_reprompt_text = False
@@ -41,7 +41,6 @@ class PoliceStationTestCase(mix_ins.RepromptTextTestMixIn,
         for feature in MOCK_RESPONSE[FEATURES]:
             self.assertIn(feature[ATTRIBUTES][FULLADDR], response.output_speech)
             self.assertIn(feature[ATTRIBUTES][NAME], response.output_speech)
-
 
     def testNoFeatureResults(self):
         self.mock_requests(get_data=copy.deepcopy(test_constants.GET_ADDRESS_CANDIDATES_API_MOCK),

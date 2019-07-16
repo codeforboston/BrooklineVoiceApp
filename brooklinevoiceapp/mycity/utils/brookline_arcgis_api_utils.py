@@ -8,7 +8,6 @@ import requests
 
 logger = logging.getLogger(__name__)
 
-
 CONTENT_TYPE_HEADER = "Content-Type"
 
 F_PARAM = "f"
@@ -42,9 +41,8 @@ FULL_ADDR_PATH = "FULLADDR"
 SPATIAL_REFERENCE_PATH = "spatialReference"
 
 
-
 def get_first_address_candidate(address: str,
-    _requests: typing.ClassVar = requests) -> object:
+                                _requests: typing.ClassVar = requests) -> object:
     """
     Retrieves the first address candidate for a given address
 
@@ -68,9 +66,8 @@ def get_first_address_candidate(address: str,
     return candidate_address, spatial_reference
 
 
-
 def geocode_address(address: str,
-    _get_first_address_candidate: callable = get_first_address_candidate) -> dict:
+                    _get_first_address_candidate: callable = get_first_address_candidate) -> dict:
     """
     Retrieves address candidates with coordinates for a given address
 
@@ -88,11 +85,10 @@ def geocode_address(address: str,
     return location
 
 
-
 def get_nearest_feature_json(address: str,
-    map_feature_id: MapFeatureID,
-    _requests: typing.ClassVar = requests,
-    _geocode_address: callable = geocode_address) -> object:
+                             map_feature_id: MapFeatureID,
+                             _requests: typing.ClassVar = requests,
+                             _geocode_address: callable = geocode_address) -> object:
     """
     Gets the information of the provided map feature from Brookline argis server
 
@@ -124,10 +120,9 @@ def get_nearest_feature_json(address: str,
     return response.json()
 
 
-
 def get_nearest_police_station_json(address: str,
-    _get_nearest_feature_json: callable = get_nearest_feature_json,
-    _geocode_address: callable = geocode_address) -> object:
+                                    _get_nearest_feature_json: callable = get_nearest_feature_json,
+                                    _geocode_address: callable = geocode_address) -> object:
     """
     Queries the Brookline arcgis server for the nearest police station
 
@@ -140,7 +135,6 @@ def get_nearest_police_station_json(address: str,
     custom_geocode = lambda arg: coordinates
     return _get_nearest_feature_json(address, MapFeatureID.POLICE_STATION,
                                      _geocode_address=custom_geocode)
-
 
 
 def get_polling_locations(address: str,
@@ -162,9 +156,8 @@ def get_polling_locations(address: str,
                                      _geocode_address=custom_geocode)
 
 
-
 def get_trash_day_json(address: str,
-    _get_nearest_feature_json: callable = get_nearest_feature_json) -> object:
+                       _get_nearest_feature_json: callable = get_nearest_feature_json) -> object:
     """
     Queries the Brookline arcgis server for trash day
 

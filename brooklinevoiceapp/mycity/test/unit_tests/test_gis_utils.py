@@ -7,13 +7,14 @@ from mycity.utils import brookline_arcgis_api_utils as utils
 
 SPACIAL = utils.SPATIAL_REFERENCE_PATH
 
+
 class GISUtilitiesTestCase(base.BaseTestCase):
 
     def test_get_first_address_candidate(self):
         expected_candidate = copy.deepcopy(test_constants.ADDRESS_CANDIDATE_MOCK)
         expected_spacial = test_constants.SPACIAL_REFERENCE_MOCK
         mock_requests = self.build_requests_stub(get_status=200,
-             get_data=test_constants.GET_ADDRESS_CANDIDATES_API_MOCK)
+                                                 get_data=test_constants.GET_ADDRESS_CANDIDATES_API_MOCK)
         candidate_result, spacial_result = utils.get_first_address_candidate(self.test_address, mock_requests)
         self.assertEqual(expected_candidate, candidate_result)
         self.assertEqual(expected_spacial, spacial_result)

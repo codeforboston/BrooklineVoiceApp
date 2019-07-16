@@ -30,7 +30,7 @@ def get_trash_pickup_info(mycity_request):
     response = MyCityResponseDataModel()
     set_address_in_session(mycity_request)
     current_address = \
-            mycity_request.session_attributes.get(intent_constants.CURRENT_ADDRESS_KEY)
+        mycity_request.session_attributes.get(intent_constants.CURRENT_ADDRESS_KEY)
     if current_address is None:
         # Delegate to the Alexa interaction model for getting the user address
         LOGGER.debug('Requesting user address')
