@@ -44,6 +44,7 @@ def get_polling_location_info(mycity_request):
     else:
         response.output_speech = _get_output_speech_for_address(current_address, mycity_request)
         response.card_title = CARD_TITLE_POLLING
+        response.should_end_session = True
 
     return response
 

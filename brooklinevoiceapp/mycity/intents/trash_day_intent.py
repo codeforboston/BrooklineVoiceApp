@@ -38,6 +38,7 @@ def get_trash_pickup_info(mycity_request):
     else:
         response.output_speech = _get_output_speech_for_address(current_address)
         response.card_title = CARD_TITLE_TRASH_DAY
+        response.should_end_session = True
 
     return response
 
