@@ -1,10 +1,12 @@
 """ Integration tests for TrashDayIntent """
-import mycity.test.test_constants as test_constants
-import mycity.test.integration_tests.intent_base_case as base_case
-import mycity.test.integration_tests.intent_test_mixins as mix_ins
-import mycity.intents.trash_day_intent as trash_intent
-import mycity.intents.intent_constants as intent_constants
 import copy
+
+from mycity.intents import intent_constants, trash_day_intent as trash_intent
+from mycity.test import test_constants
+from mycity.test.integration_tests import (
+    intent_base_case as base_case,
+    intent_test_mixins as mix_ins,
+)
 
 MOCK_RESPONSE = test_constants.GET_TRASH_PICKUP_API_MOCK
 

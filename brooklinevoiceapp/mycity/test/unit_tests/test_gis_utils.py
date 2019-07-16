@@ -1,9 +1,9 @@
-import mycity.test.test_constants as test_constants
-import mycity.utils.brookline_arcgis_api_utils as utils
-import mycity.test.unit_tests.base as base
-import unittest.mock as mock
 import copy
+from unittest import mock
 
+from mycity.test import test_constants
+from mycity.test.unit_tests import base
+from mycity.utils import brookline_arcgis_api_utils as utils
 
 SPACIAL = utils.SPATIAL_REFERENCE_PATH
 
@@ -45,4 +45,3 @@ class GISUtilitiesTestCase(base.BaseTestCase):
                                                        _get_nearest_feature_json=mock_nearest_feature_call,
                                                        _geocode_address=mock_geocode_call)
         self.assertEqual(result, test_constants.GET_POLLING_LOCATIONS_API_MOCK)
-

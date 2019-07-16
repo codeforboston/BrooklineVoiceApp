@@ -2,10 +2,9 @@
 from enum import Enum
 import json
 import logging
-import requests
-import logging
 import typing
 
+import requests
 
 logger = logging.getLogger(__name__)
 
@@ -174,4 +173,3 @@ def get_trash_day_json(address: str,
     """
     logger.debug('Finding trash day for address: ' + str(address))
     return _get_nearest_feature_json(address, MapFeatureID.TRASH_DAY)
-

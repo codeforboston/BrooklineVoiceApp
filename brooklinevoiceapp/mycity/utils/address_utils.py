@@ -1,5 +1,6 @@
-from mycity.intents import intent_constants
 import logging
+
+from mycity.intents import intent_constants
 
 logger = logging.getLogger(__name__)
 
@@ -22,5 +23,3 @@ def set_address_in_session(mycity_request):
                     # changed the address
                     del(mycity_request.session_attributes
                         [intent_constants.ZIP_CODE_KEY])
-
-

@@ -264,4 +264,3 @@ GET_POLLING_LOCATIONS_API_MOCK = {
         }
     ]
 }
-

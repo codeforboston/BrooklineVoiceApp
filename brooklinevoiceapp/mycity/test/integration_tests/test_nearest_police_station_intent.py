@@ -1,9 +1,11 @@
-import mycity.test.test_constants as test_constants
-import mycity.test.integration_tests.intent_base_case as base_case
-import mycity.test.integration_tests.intent_test_mixins as mix_ins
-import mycity.intents.police_station_intent as ps_intent
-import mycity.intents.intent_constants as intent_constants
 import copy
+
+from mycity.intents import intent_constants, police_station_intent as ps_intent
+from mycity.test import test_constants
+from mycity.test.integration_tests import (
+    intent_base_case as base_case,
+    intent_test_mixins as mix_ins,
+)
 
 ############################################
 # TestCase class for police_station_intent #

@@ -1,12 +1,13 @@
-import unittest
-import requests
 import typing
-import unittest.mock as mock
-import brookline_controller as my_controller
-import mycity.intents.intent_constants as intent_constants
-import mycity.mycity_request_data_model as req
-import mycity.utils.brookline_arcgis_api_utils as utils
+import unittest
+from unittest import mock
 
+import requests
+
+import brookline_controller as my_controller
+from mycity import mycity_request_data_model as req
+from mycity.intents import intent_constants
+from mycity.utils import brookline_arcgis_api_utils as utils
 
 ###############################################################################
 # TestCase parent class for all intent TestCases, which are integration tests #

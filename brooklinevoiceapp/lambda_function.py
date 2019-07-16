@@ -5,9 +5,10 @@ This module is the entry point for processing voice data from an Alexa device.
 """
 
 import logging
-from mycity.mycity_request_data_model import MyCityRequestDataModel
+
 from brookline_controller import execute_request
- 
+from mycity.mycity_request_data_model import MyCityRequestDataModel
+
 logger = logging.getLogger(__name__)
 
 
