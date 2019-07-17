@@ -63,7 +63,7 @@ def get_first_address_candidate(address: str,
     with _requests.Session() as session:
         response = session.get(GEOCODE_URL, params=url_params)
 
-    logger.debug('Got address candidate response: ' + str(response))
+    logger.debug('Got address candidate response: ' + str(response.json()))
     candidate_address = response.json()[CANDIDATES_PATH][0]
     spatial_reference = response.json()[SPATIAL_REFERENCE_PATH]
     return candidate_address, spatial_reference
@@ -121,7 +121,7 @@ def get_nearest_feature_json(address: str,
     with _requests.Session() as session:
         response = session.post(url, headers=headers, data=payload)
 
-    logger.debug('Got response from Brookline arcgis: ' + str(response))
+    logger.debug('Got response from Brookline arcgis: ' + str(response.text))
     return response.json()
 
 
@@ -143,6 +143,22 @@ def get_nearest_police_station_json(address: str,
                                      _geocode_address=custom_geocode)
 
 
+def get_nearest_library_json(address: str,
+    _get_nearest_feature_json: callable = get_nearest_feature_json,
+    _geocode_address: callable = geocode_address) -> object:
+    """
+    Queries the Brookline arcgis server for the nearest library
+
+    :param address: Address string to query
+    :return: Json data object response
+    """
+    logger.debug('Finding closest library for address: ' + str(address))
+    location = _geocode_address(address)
+    logger.debug("location:" + str(location))
+    coordinates = [location['x'], location['y']]
+    custom_geocode = lambda arg: coordinates
+    return _get_nearest_feature_json(address, MapFeatureID.LIBRARY,
+                                     _geocode_address=custom_geocode)
 
 def get_trash_day_json(address: str,
     _get_nearest_feature_json: callable = get_nearest_feature_json) -> object:
