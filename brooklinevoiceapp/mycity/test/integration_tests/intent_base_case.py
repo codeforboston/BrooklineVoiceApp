@@ -1,11 +1,13 @@
-import unittest
-import requests
 import typing
-import unittest.mock as mock
+import unittest
+from unittest import mock
+
+import requests
+
 import brookline_controller as my_controller
-import mycity.intents.intent_constants as intent_constants
-import mycity.mycity_request_data_model as req
-import mycity.utils.brookline_arcgis_api_utils as utils
+from mycity import mycity_request_data_model as req
+from mycity.intents import intent_constants
+from mycity.utils import brookline_arcgis_api_utils as utils
 
 
 ###############################################################################
@@ -28,7 +30,6 @@ class ResponseStub:
 
 
 class IntentBaseCase(unittest.TestCase):
-
     intent_to_test = None
     expected_title = "Unhandled"
     returns_reprompt_text = False

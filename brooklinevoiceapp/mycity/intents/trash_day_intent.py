@@ -1,10 +1,10 @@
 """ Intent for responding to trash day requests """
 import logging
-from mycity.mycity_response_data_model import MyCityResponseDataModel
+
 from mycity.intents import intent_constants
+from mycity.mycity_response_data_model import MyCityResponseDataModel
 from mycity.utils.address_utils import set_address_in_session
 from mycity.utils.brookline_arcgis_api_utils import get_trash_day_json
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -30,7 +30,7 @@ def get_trash_pickup_info(mycity_request):
     response = MyCityResponseDataModel()
     set_address_in_session(mycity_request)
     current_address = \
-            mycity_request.session_attributes.get(intent_constants.CURRENT_ADDRESS_KEY)
+        mycity_request.session_attributes.get(intent_constants.CURRENT_ADDRESS_KEY)
     if current_address is None:
         # Delegate to the Alexa interaction model for getting the user address
         LOGGER.debug('Requesting user address')

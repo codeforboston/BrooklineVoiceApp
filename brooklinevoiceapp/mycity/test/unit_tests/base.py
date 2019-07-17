@@ -1,9 +1,11 @@
-import unittest
-import unittest.mock as mock
 import typing
+import unittest
+from unittest import mock
+
 import requests
+
 import brookline_controller as my_controller
-import mycity.mycity_request_data_model as my_req
+from mycity import mycity_request_data_model as my_req
 
 
 # Mock class for the API response
@@ -39,4 +41,3 @@ class BaseTestCase(unittest.TestCase):
         requests_stub.Session.get = mock.MagicMock(return_value=ResponseStub(get_status, get_data))
         requests_stub.Session.post = mock.MagicMock(return_value=ResponseStub(post_status, post_data))
         return requests_stub
-
