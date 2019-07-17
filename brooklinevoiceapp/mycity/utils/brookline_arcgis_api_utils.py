@@ -127,7 +127,8 @@ def get_nearest_feature_json(address: str,
 
 
 def get_nearest_police_station_json(address: str,
-    _get_nearest_feature_json: callable = get_nearest_feature_json) -> object:
+    _get_nearest_feature_json: callable = get_nearest_feature_json,
+    _geocode_address: callable = geocode_address) -> object:
     """
     Queries the Brookline arcgis server for the nearest police station
 
@@ -135,7 +136,11 @@ def get_nearest_police_station_json(address: str,
     :return: Json data object response
     """
     logger.debug('Finding closest police station for address: ' + str(address))
-    return _get_nearest_feature_json(address, MapFeatureID.POLICE_STATION)
+    location = _geocode_address(address)
+    coordinates = [location['x'], location['y']]
+    custom_geocode = lambda arg: coordinates
+    return _get_nearest_feature_json(address, MapFeatureID.POLICE_STATION,
+                                     _geocode_address=custom_geocode)
 
 
 

@@ -49,6 +49,23 @@
                     ]
                 },
                 {
+                    "name": "LibraryIntent",
+                    "slots": [
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "samples": [
+                                "I live at {Address}",
+                                "I am at {Address}",
+                                "{Address}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "Where is the library"
+                    ]
+                },
+                {
                     "name": "TrashDayIntent",
                     "slots": [
                         {
@@ -83,6 +100,22 @@
             "intents": [
                 {
                     "name": "PoliceStationIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.AskAddress"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "LibraryIntent",
                     "confirmationRequired": false,
                     "prompts": {},
                     "slots": [

@@ -5,6 +5,7 @@ Dispatches MyCityRequestsObjects to the appropriate Brookline intent
 from mycity.mycity_response_data_model import MyCityResponseDataModel
 from mycity.intents.police_station_intent import find_closest_police_station
 from mycity.intents.trash_day_intent import get_trash_pickup_info
+from mycity.intents.library_intent import find_closest_library
 import logging
 
 logger = logging.getLogger(__name__)
@@ -30,6 +31,7 @@ def execute_request(mycity_request):
         response = MyCityResponseDataModel()
         response.output_speech = "Hello from Brookline! We do not support that yet"
 
+    response.session_attributes = mycity_request.session_attributes
     return response
 
 
@@ -105,6 +107,8 @@ def on_intent(mycity_request):
         return find_closest_police_station(mycity_request)
     elif mycity_request.intent_name == "TrashDayIntent":
         return get_trash_pickup_info(mycity_request)
+    elif mycity_request.intent_name == "LibraryIntent":
+        return find_closest_library(mycity_request)
     else:
         raise ValueError("Invalid Intent")
         
