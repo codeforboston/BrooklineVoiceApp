@@ -2,11 +2,16 @@
 Dispatches MyCityRequestsObjects to the appropriate Brookline intent
 """
 
-from mycity.mycity_response_data_model import MyCityResponseDataModel
+import logging
+
+from mycity.intents.library_intent import find_closest_library
 from mycity.intents.police_station_intent import find_closest_police_station
 from mycity.intents.trash_day_intent import get_trash_pickup_info
-from mycity.intents.library_intent import find_closest_library
-import logging
+from mycity.mycity_response_data_model import MyCityResponseDataModel
+
+<<<<<<< HEAD
+=======
+>>>>>>> 35c77d0b92afd76597ce63889c0f7ddafe4c1c38
 
 logger = logging.getLogger(__name__)
 
@@ -111,5 +116,3 @@ def on_intent(mycity_request):
         return find_closest_library(mycity_request)
     else:
         raise ValueError("Invalid Intent")
-        
-

@@ -1,10 +1,9 @@
-from mycity.utils.address_utils import set_address_in_session
+import logging
+
 from mycity.intents import intent_constants
 from mycity.mycity_response_data_model import MyCityResponseDataModel
-from mycity.utils.brookline_arcgis_api_utils import \
-    get_nearest_library_json
-
-import logging
+from mycity.utils.address_utils import set_address_in_session
+from mycity.utils.brookline_arcgis_api_utils import get_nearest_library_json
 
 logger = logging.getLogger(__name__)
 

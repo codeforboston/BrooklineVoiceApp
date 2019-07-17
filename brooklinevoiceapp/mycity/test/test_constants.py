@@ -1,4 +1,3 @@
-
 ##################################################################
 # Mocked returns for patched functions that access web resources #
 ##################################################################
@@ -206,3 +205,61 @@ NO_RESPONSE_TRASH_PICKUP_API_MOCK = {
     "features": []
 }
 
+GET_POLLING_LOCATIONS_API_MOCK = {
+    "features": [
+        {
+            "attributes": {
+                "OBJECTID": 1,
+                "NAME": "Young Israel of Brookline, 62 Green St (Side En",
+                "POLLINGID": "8",
+                "FULLADD": "345 HARVARD ST",
+                "CITY": "Brookline",
+                "STATE": "MA",
+                "CONTACT": "Brookline Town Clerk",
+                "PHONE": "617-730-2010",
+                "EMAIL": "pward@brooklinema.gov",
+                "PRECINCT": "Precinct 8"
+            },
+            "geometry": {
+                "x": -7917111.8624876123,
+                "y": 5212769.3177538002
+            }
+        },
+        {
+            "attributes": {
+                "OBJECTID": 2,
+                "NAME": "(New) Lincoln School, 19 Kennard Road",
+                "POLLINGID": "5",
+                "FULLADD": "19 KENNARD RD",
+                "CITY": "Brookline",
+                "STATE": "MA",
+                "CONTACT": "Brookline Town Clerk",
+                "PHONE": "617-730-2010",
+                "EMAIL": "pward@brooklinema.gov",
+                "PRECINCT": "Precinct 5"
+            },
+            "geometry": {
+                "x": -7918086.1184908934,
+                "y": 5210343.692659962
+            }
+        },
+        {
+            "attributes": {
+                "OBJECTID": 3,
+                "NAME": "Heath School Gymnasium, 100 Eliot Street",
+                "POLLINGID": "14",
+                "FULLADD": "100 ELIOT ST",
+                "CITY": "Brookline",
+                "STATE": "MA",
+                "CONTACT": "Brookline Town Clerk",
+                "PHONE": "617-730-2010",
+                "EMAIL": "pward@brooklinema.gov",
+                "PRECINCT": "Precinct 14"
+            },
+            "geometry": {
+                "x": -7920158.8921198044,
+                "y": 5210251.6698454535
+            }
+        }
+    ]
+}
