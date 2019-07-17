@@ -1,4 +1,3 @@
-
 ##################################################################
 # Mocked returns for patched functions that access web resources #
 ##################################################################
@@ -264,4 +263,3 @@ GET_POLLING_LOCATIONS_API_MOCK = {
         }
     ]
 }
-

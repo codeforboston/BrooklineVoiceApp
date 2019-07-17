@@ -3,16 +3,17 @@ Tools to package and deploy the lambda function for the Brookline voice app.
 """
 
 from __future__ import print_function
-from subprocess import run, PIPE
+
 import argparse
-import os
-import shutil
-import zipfile
-import stat
 import errno
-import time
-import re
 import json
+import os
+import re
+import shutil
+import stat
+from subprocess import PIPE, run
+import time
+import zipfile
 
 # path constants
 PROJECT_NAME = "brooklinevoiceapp"

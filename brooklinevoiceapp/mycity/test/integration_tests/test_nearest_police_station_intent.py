@@ -1,9 +1,11 @@
-import mycity.test.test_constants as test_constants
-import mycity.test.integration_tests.intent_base_case as base_case
-import mycity.test.integration_tests.intent_test_mixins as mix_ins
-import mycity.intents.police_station_intent as ps_intent
-import mycity.intents.intent_constants as intent_constants
 import copy
+
+from mycity.intents import intent_constants, police_station_intent as ps_intent
+from mycity.test import test_constants
+from mycity.test.integration_tests import (
+    intent_base_case as base_case,
+    intent_test_mixins as mix_ins,
+)
 
 ############################################
 # TestCase class for police_station_intent #
@@ -18,10 +20,10 @@ ATTRIBUTES = ps_intent.ATTRIBUTES_PATH
 NAME = ps_intent.NAME_PATH
 FULLADDR = ps_intent.FULLADDR_PATH
 
-class PoliceStationTestCase(mix_ins.RepromptTextTestMixIn,
-                             mix_ins.CardTitleTestMixIn,
-                             base_case.IntentBaseCase):
 
+class PoliceStationTestCase(mix_ins.RepromptTextTestMixIn,
+                            mix_ins.CardTitleTestMixIn,
+                            base_case.IntentBaseCase):
     intent_to_test = "PoliceStationIntent"
     expected_title = ps_intent.CARD_TITLE_POLICE_STATION
     returns_reprompt_text = False
@@ -39,7 +41,6 @@ class PoliceStationTestCase(mix_ins.RepromptTextTestMixIn,
         for feature in MOCK_RESPONSE[FEATURES]:
             self.assertIn(feature[ATTRIBUTES][FULLADDR], response.output_speech)
             self.assertIn(feature[ATTRIBUTES][NAME], response.output_speech)
-
 
     def testNoFeatureResults(self):
         self.mock_requests(get_data=copy.deepcopy(test_constants.GET_ADDRESS_CANDIDATES_API_MOCK),
