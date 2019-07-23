@@ -35,7 +35,7 @@ def find_closest_police_station(mycity_request):
     current_address = mycity_request \
         .session_attributes \
         .get(intent_constants.CURRENT_ADDRESS_KEY)
-    if current_address is None: 
+    if current_address is None:
         response.dialog_directive = "Delegate"
     else:
         response.output_speech = _get_output_speech_for_address(current_address)
