@@ -1,8 +1,15 @@
+from math import sin, cos, radians, acos, degrees, inf
 import logging
 
 from mycity.intents import intent_constants
 
 logger = logging.getLogger(__name__)
+
+# a minute is 1/60th of a degree
+MINUTES_PER_DEGREE = 60
+# nautical miles are based on the earth's circumference.
+# statute miles are what we conventionally refer to as miles (5,280 feet)
+STATUTE_MILES_PER_NAUTICAL_MILE = 1.1515
 
 
 def set_address_in_session(mycity_request):
@@ -16,10 +23,81 @@ def set_address_in_session(mycity_request):
     if 'Address' in mycity_request.intent_variables and \
             'value' in mycity_request.intent_variables['Address']:
         address = mycity_request.intent_variables['Address']['value']
-        logger.debug("Setting Address in Session Attributes. Address: {}".format(str(address)))
-        mycity_request.session_attributes[intent_constants.CURRENT_ADDRESS_KEY] = address
+        logger.debug(
+            "Setting Address in Session Attributes. Address: {}".format(
+                str(address)
+            )
+        )
+        mycity_request.session_attributes[
+            intent_constants.CURRENT_ADDRESS_KEY
+        ] = address
         if intent_constants.ZIP_CODE_KEY in mycity_request.session_attributes:
             # We clear out any zip code saved if the user has
             # changed the address
-            del (mycity_request.session_attributes
-            [intent_constants.ZIP_CODE_KEY])
+            del(mycity_request.session_attributes
+                [intent_constants.ZIP_CODE_KEY])
+
+
+def get_distance(start, end):
+    """
+    Calculates the distance between two map points. See:
+    https://github.com/Esri/my-government-services/blob/85fcf753b4871f0e7c6713f34f49f9812a88cc91/js/carousel.js#L1571
+
+    :param start: Start point for distance calculation.
+    :param end: End point for distance calculation.
+    :return: Distance between start and end.
+    """
+    lon1 = start['x']
+    lat1 = start['y']
+    lon2 = end['x']
+    lat2 = end['y']
+    theta = lon1 - lon2
+    dist = sin(radians(lat1)) * sin(radians(lat2)) \
+        + cos(radians(lat1)) * cos(radians(lat2)) * cos(radians(theta))
+    dist = acos(dist)
+    dist = degrees(dist)
+    dist = dist * MINUTES_PER_DEGREE * STATUTE_MILES_PER_NAUTICAL_MILE
+    return (dist * 10) / 10
+
+
+def get_closest_result(home_coordinates, features):
+    """
+    Given a home location and a list of features, returns the closest feature
+    to home.
+
+    :param home_coordinates: The user's location.
+                             {x:longitude, y:latitude}
+    :param features: The feature list from an arcgis query response.
+    :return: The closest feature.
+    """
+    # If we don't have an x or y value for home, or the features list is
+    # empty, we can't calculate a closest feature.
+    if 'x' not in home_coordinates \
+            or 'y' not in home_coordinates \
+            or len(features) < 1:
+        return {}
+
+    # Initialize the closest feature to an empty object with a distance
+    # of infinity.
+    closest = {
+        'feature': {},
+        'distance': inf
+    }
+
+    # Find the closest feature.
+    for feature in features:
+        feature_coordinates = {
+            'x': feature['geometry']['x'],
+            'y': feature['geometry']['y']
+        }
+        distance = get_distance(
+            home_coordinates,
+            feature_coordinates
+        )
+        if distance < closest['distance']:
+            closest = {
+                'feature': feature,
+                'distance': distance
+            }
+
+    return closest['feature']
