@@ -1,5 +1,6 @@
-from math import sin, cos, radians, acos, degrees, inf
+from math import sin, cos, radians, acos, degrees
 import logging
+from operator import itemgetter
 
 from mycity.intents import intent_constants
 
@@ -60,7 +61,7 @@ def get_distance(start, end):
     return (dist * 10) / 10
 
 
-def get_closest_result(home_coordinates, features):
+def get_sorted_features(home_coordinates, features):
     """
     Given a home location and a list of features, returns the closest feature
     to home.
@@ -70,34 +71,8 @@ def get_closest_result(home_coordinates, features):
     :param features: The feature list from an arcgis query response.
     :return: The closest feature.
     """
-    # If we don't have an x or y value for home, or the features list is
-    # empty, we can't calculate a closest feature.
-    if 'x' not in home_coordinates \
-            or 'y' not in home_coordinates \
-            or len(features) < 1:
-        return {}
+    # If we don't have an x or y value for home, we can't calculate a closest feature.
+    if 'x' not in home_coordinates or 'y' not in home_coordinates:
+        return []
 
-    # Initialize the closest feature to an empty object with a distance
-    # of infinity.
-    closest = {
-        'feature': {},
-        'distance': inf
-    }
-
-    # Find the closest feature.
-    for feature in features:
-        feature_coordinates = {
-            'x': feature['geometry']['x'],
-            'y': feature['geometry']['y']
-        }
-        distance = get_distance(
-            home_coordinates,
-            feature_coordinates
-        )
-        if distance < closest['distance']:
-            closest = {
-                'feature': feature,
-                'distance': distance
-            }
-
-    return closest['feature']
+    return sorted(features, key=lambda feature: get_distance(home_coordinates, feature['geometry']))

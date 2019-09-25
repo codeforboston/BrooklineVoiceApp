@@ -174,6 +174,10 @@ GET_TRASH_PICKUP_API_MOCK = {
                 "SATURDAY": "No",
                 "SUNDAY": "No",
                 "GlobalID": "{20538BBF-EB83-4CCD-B1E8-93EF36554413}"
+            },
+            "geometry": {
+                "x": -71.121409303637222,
+                "y": 42.333789044263746
             }
         }
     ]
