@@ -75,4 +75,5 @@ def get_sorted_features(home_coordinates, features):
     if 'x' not in home_coordinates or 'y' not in home_coordinates:
         return []
 
+    logger.debug("features:{}".format(features))
     return sorted(features, key=lambda feature: get_distance(home_coordinates, feature['geometry']))
