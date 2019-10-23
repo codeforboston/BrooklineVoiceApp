@@ -83,7 +83,7 @@ def geocode_address(address: str,
     try:
         candidate, spatial_reference = _get_first_address_candidate(address)
         location = candidate[LOCATION_PATH]
-        # location[SPATIAL_REFERENCE_PATH] = spatial_reference
+        location[SPATIAL_REFERENCE_PATH] = spatial_reference
     except IndexError:
         return {}
 
@@ -118,7 +118,7 @@ def get_sorted_features_json(address: str,
         INSR_PARAM: "102100",
         OUT_FIELDS_PARAM: "*",
         OUTSR_PARAM: "102100",
-        GEOMETRY_PARAM: json.dumps(home_address[LOCATION_PATH])
+        GEOMETRY_PARAM: json.dumps(home_address)
     }
     with _requests.Session() as session:
         response = session.post(url, headers=headers, data=payload)
