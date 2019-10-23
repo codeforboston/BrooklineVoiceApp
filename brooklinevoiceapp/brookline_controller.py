@@ -9,9 +9,6 @@ from mycity.intents.police_station_intent import find_closest_police_station
 from mycity.intents.trash_day_intent import get_trash_pickup_info
 from mycity.mycity_response_data_model import MyCityResponseDataModel
 
-<<<<<<< HEAD
-=======
->>>>>>> 35c77d0b92afd76597ce63889c0f7ddafe4c1c38
 
 logger = logging.getLogger(__name__)
 

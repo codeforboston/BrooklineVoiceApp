@@ -6,6 +6,8 @@ import typing
 
 import requests
 
+from mycity.utils import address_utils
+
 logger = logging.getLogger(__name__)
 
 CONTENT_TYPE_HEADER = "Content-Type"
@@ -24,6 +26,8 @@ MAPSERVER_URL = \
     "http://gisweb.brooklinema.gov/arcgis/rest/services/MyGov/GovernmentServices/MapServer/{}/query"
 GEOCODE_URL = \
     "http://gisweb.brooklinema.gov/arcgis/rest/services/Composite_WhereAmI/GeocodeServer/findAddressCandidates"
+
+FEATURES_PATH = "features"
 
 
 class MapFeatureID(Enum):
@@ -79,14 +83,14 @@ def geocode_address(address: str,
     try:
         candidate, spatial_reference = _get_first_address_candidate(address)
         location = candidate[LOCATION_PATH]
-        location[SPATIAL_REFERENCE_PATH] = spatial_reference
+        # location[SPATIAL_REFERENCE_PATH] = spatial_reference
     except IndexError:
         return {}
 
     return location
 
 
-def get_nearest_feature_json(address: str,
+def get_sorted_features_json(address: str,
                              map_feature_id: MapFeatureID,
                              _requests: typing.ClassVar = requests,
                              _geocode_address: callable = geocode_address) -> object:
@@ -102,6 +106,8 @@ def get_nearest_feature_json(address: str,
     if not isinstance(map_feature_id, MapFeatureID):
         raise Exception('get_nearest_feature_json() called with invalid feature ID')
 
+    home_address = _geocode_address(address)
+    logger.debug("home address:{}".format(home_address))
     url = MAPSERVER_URL.format(map_feature_id.value)
     headers = {CONTENT_TYPE_HEADER: "application/x-www-form-urlencoded"}
     payload = {
@@ -112,18 +118,18 @@ def get_nearest_feature_json(address: str,
         INSR_PARAM: "102100",
         OUT_FIELDS_PARAM: "*",
         OUTSR_PARAM: "102100",
-        GEOMETRY_PARAM: json.dumps(_geocode_address(address))
+        GEOMETRY_PARAM: json.dumps(home_address[LOCATION_PATH])
     }
     with _requests.Session() as session:
         response = session.post(url, headers=headers, data=payload)
 
-    logger.debug('Got response from Brookline arcgis: ' + str(response.text))
-    return response.json()
+    logger.debug('Got response from Brookline arcgis: ' + repr(response.json()))
+    features = response.json()[FEATURES_PATH]
+    return address_utils.get_sorted_features(home_address, features)
 
 
-def get_nearest_police_station_json(address: str,
-                                    _get_nearest_feature_json: callable = get_nearest_feature_json,
-                                    _geocode_address: callable = geocode_address) -> object:
+def get_sorted_police_station_json(address: str,
+                                   _get_sorted_features_json: callable = get_sorted_features_json) -> object:
     """
     Queries the Brookline arcgis server for the nearest police station
 
@@ -131,37 +137,28 @@ def get_nearest_police_station_json(address: str,
     :return: Json data object response
     """
     logger.debug('Finding closest police station for address: ' + str(address))
-    location = _geocode_address(address)
-    coordinates = [location['x'], location['y']]
-    custom_geocode = lambda arg: coordinates
-    return _get_nearest_feature_json(address, MapFeatureID.POLICE_STATION,
-                                     _geocode_address=custom_geocode)
+    return _get_sorted_features_json(address, MapFeatureID.POLICE_STATION)
 
 
 def get_nearest_library_json(address: str,
-    _get_nearest_feature_json: callable = get_nearest_feature_json,
-    _geocode_address: callable = geocode_address) -> object:
+                                   _get_sorted_features_json: callable = get_sorted_features_json,
+                                   _geocode_address: callable = geocode_address) -> object:
     """
     Queries the Brookline arcgis server for the nearest library
 
     :param address: Address string to query
     :return: Json data object response
     """
-    logger.debug('Finding closest library for address: ' + str(address))
-    location = _geocode_address(address)
-    logger.debug("location:" + str(location))
-    coordinates = [location['x'], location['y']]
-    custom_geocode = lambda arg: coordinates
-    return _get_nearest_feature_json(address, MapFeatureID.LIBRARY,
-                                     _geocode_address=custom_geocode)
+    return _get_sorted_features_json(address, MapFeatureID.LIBRARY)
+
 def get_polling_locations(address: str,
-                          _get_nearest_feature_json: callable = get_nearest_feature_json,
+                          _get_sorted_features_json: callable = get_sorted_features_json,
                           _geocode_address: callable = geocode_address) -> object:
     """
     Queries the Brookline arcgis server for nearby polling stations
 
     :param address: Address string to query
-    :param _get_nearest_feature_json: Callable to get the arcgis server response
+    :param _get_sorted_features_json: Callable to get the arcgis server response
     :param _geocode_address: Callable to transform string address to [x,y]
     :return: Json data object response
     """
@@ -169,12 +166,12 @@ def get_polling_locations(address: str,
     location = _geocode_address(address)
     coordinates = [location['x'], location['y']]
     custom_geocode = lambda arg: coordinates
-    return _get_nearest_feature_json(address, MapFeatureID.POLLING_LOCATION,
+    return _get_sorted_features_json(address, MapFeatureID.POLLING_LOCATION,
                                      _geocode_address=custom_geocode)
 
 
 def get_trash_day_json(address: str,
-                       _get_nearest_feature_json: callable = get_nearest_feature_json) -> object:
+                       _get_sorted_features_json: callable = get_sorted_features_json) -> object:
     """
     Queries the Brookline arcgis server for trash day
 
@@ -182,4 +179,4 @@ def get_trash_day_json(address: str,
     :return: Json object response from the server
     """
     logger.debug('Finding trash day for address: ' + str(address))
-    return _get_nearest_feature_json(address, MapFeatureID.TRASH_DAY)
+    return _get_sorted_features_json(address, MapFeatureID.TRASH_DAY)
