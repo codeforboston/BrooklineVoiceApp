@@ -94,7 +94,7 @@ def get_sorted_features_json(address: str,
                              _requests: typing.ClassVar = requests,
                              _geocode_address: callable = geocode_address) -> object:
     """
-    Gets the information of the provided map feature from Brookline argis server
+    Gets the information of the provided map feature from Brookline arcgis server
 
     :param address: Adress string to use in query
     :param map_feature_id: MapFeatureID to query the server for
@@ -116,7 +116,7 @@ def get_sorted_features_json(address: str,
         INSR_PARAM: "102100",
         OUT_FIELDS_PARAM: "*",
         OUTSR_PARAM: "102100",
-        GEOMETRY_PARAM: json.dumps(home_address)
+        GEOMETRY_PARAM: json.dumps([home_address['x'], home_address['y']])
     }
     with _requests.Session() as session:
         response = session.post(url, headers=headers, data=payload)

@@ -1,5 +1,11 @@
-from math import sin, cos, radians, acos, degrees
 import logging
+from math import (
+    acos,
+    cos,
+    degrees,
+    radians,
+    sin,
+)
 from operator import itemgetter
 
 from mycity.intents import intent_constants
