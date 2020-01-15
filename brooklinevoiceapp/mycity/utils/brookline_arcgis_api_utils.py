@@ -36,6 +36,10 @@ class MapFeatureID(Enum):
     TRASH_DAY = 12
     POLLING_LOCATION = 21
 
+class NonSortedFeatures(Enum):
+    """Brookline GIS feature types that shouldn't be sorted"""
+    TRASH_DAY = 12
+
 
 CANDIDATES_PATH = "candidates"
 LOCATION_PATH = "location"
@@ -96,7 +100,7 @@ def get_sorted_features_json(address: str,
     """
     Gets the information of the provided map feature from Brookline argis server
 
-    :param address: Adress string to use in query
+    :param address: Address string to use in query
     :param map_feature_id: MapFeatureID to query the server for
     :param _requests: Requests library object
     :param _geocode_address: injectable function for test
@@ -105,6 +109,7 @@ def get_sorted_features_json(address: str,
     if not isinstance(map_feature_id, MapFeatureID):
         raise Exception('get_nearest_feature_json() called with invalid feature ID')
 
+    notSorted = [mapId.value for mapId in NonSortedFeatures]
     home_address = _geocode_address(address)
     url = MAPSERVER_URL.format(map_feature_id.value)
     headers = {CONTENT_TYPE_HEADER: "application/x-www-form-urlencoded"}
@@ -116,13 +121,17 @@ def get_sorted_features_json(address: str,
         INSR_PARAM: "102100",
         OUT_FIELDS_PARAM: "*",
         OUTSR_PARAM: "102100",
-        GEOMETRY_PARAM: json.dumps(home_address)
+        GEOMETRY_PARAM: json.dumps([home_address['x'], home_address['y']])
     }
     with _requests.Session() as session:
         response = session.post(url, headers=headers, data=payload)
 
     logger.debug('Got response from Brookline arcgis: ' + repr(response.json()))
     features = response.json()[FEATURES_PATH]
+    logger.debug("map:" + str(notSorted))
+    if map_feature_id.value in notSorted:
+        logger.debug("returning features")
+        return features
     return address_utils.get_sorted_features(home_address, features)
 
 
@@ -151,11 +160,7 @@ def get_polling_locations(address: str,
     :return: Json data object response
     """
     logger.debug('Finding polling stations for address: ' + str(address))
-    location = _geocode_address(address)
-    coordinates = [location['x'], location['y']]
-    custom_geocode = lambda arg: coordinates
-    return _get_sorted_features_json(address, MapFeatureID.POLLING_LOCATION,
-                                     _geocode_address=custom_geocode)
+    return _get_sorted_features_json(address, MapFeatureID.POLLING_LOCATION)
 
 
 def get_trash_day_json(address: str,

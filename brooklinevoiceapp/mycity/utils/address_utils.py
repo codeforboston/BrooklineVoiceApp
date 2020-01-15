@@ -72,6 +72,8 @@ def get_sorted_features(home_coordinates, features):
     :return: The closest feature.
     """
     # If we don't have an x or y value for home, we can't calculate a closest feature.
+    logger.debug("home coords:" + str(home_coordinates))
+    logger.debug("features:" + str(features))
     if 'x' not in home_coordinates or 'y' not in home_coordinates:
         return []
 
