@@ -98,7 +98,7 @@ def get_sorted_features_json(address: str,
                              _requests: typing.ClassVar = requests,
                              _geocode_address: callable = geocode_address) -> object:
     """
-    Gets the information of the provided map feature from Brookline argis server
+    Gets the information of the provided map feature from Brookline arcgis server
 
     :param address: Address string to use in query
     :param map_feature_id: MapFeatureID to query the server for
@@ -113,18 +113,19 @@ def get_sorted_features_json(address: str,
     home_address = _geocode_address(address)
     url = MAPSERVER_URL.format(map_feature_id.value)
     headers = {CONTENT_TYPE_HEADER: "application/x-www-form-urlencoded"}
-    payload = {
+    if 'z' in home_address:
+        del home_address['z']
+    params = {
         F_PARAM: "json",
         RETURN_GEOMETRY_PARAM: "true",
-        SPATIAL_REL_PARAM: "esriSpatialRelIntersects",
+        SPATIAL_REL_PARAM: "esriSpatialRelWithin",
         GEOMETRY_TYPE_PARAM: "esriGeometryPoint",
         INSR_PARAM: "102100",
         OUT_FIELDS_PARAM: "*",
         OUTSR_PARAM: "102100",
-        GEOMETRY_PARAM: json.dumps([home_address['x'], home_address['y']])
+        GEOMETRY_PARAM: json.dumps(home_address),
     }
-    with _requests.Session() as session:
-        response = session.post(url, headers=headers, data=payload)
+    response = requests.get(url, headers=headers, params=params)
 
     logger.debug('Got response from Brookline arcgis: ' + repr(response.json()))
     features = response.json()[FEATURES_PATH]

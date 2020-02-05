@@ -9,7 +9,6 @@ from mycity import mycity_request_data_model as req
 from mycity.intents import intent_constants
 from mycity.utils import brookline_arcgis_api_utils as utils
 
-
 ###############################################################################
 # TestCase parent class for all intent TestCases, which are integration tests #
 # to see if any changes in codebase have broken response-request model.       #
