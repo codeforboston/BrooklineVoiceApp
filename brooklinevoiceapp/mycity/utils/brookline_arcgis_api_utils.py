@@ -95,8 +95,9 @@ def geocode_address(address: str,
 
 def get_sorted_features_json(address: str,
                              map_feature_id: MapFeatureID,
-                             _requests: typing.ClassVar = requests,
-                             _geocode_address: callable = geocode_address) -> object:
+                             geometry_params: dict,
+                             home_address: dict = {},
+                             _requests: typing.ClassVar = requests) -> object:
     """
     Gets the information of the provided map feature from Brookline arcgis server
 
@@ -110,21 +111,17 @@ def get_sorted_features_json(address: str,
         raise Exception('get_nearest_feature_json() called with invalid feature ID')
 
     notSorted = [mapId.value for mapId in NonSortedFeatures]
-    home_address = _geocode_address(address)
     url = MAPSERVER_URL.format(map_feature_id.value)
     headers = {CONTENT_TYPE_HEADER: "application/x-www-form-urlencoded"}
-    if 'z' in home_address:
-        del home_address['z']
     params = {
         F_PARAM: "json",
         RETURN_GEOMETRY_PARAM: "true",
-        SPATIAL_REL_PARAM: "esriSpatialRelWithin",
-        GEOMETRY_TYPE_PARAM: "esriGeometryPoint",
         INSR_PARAM: "102100",
         OUT_FIELDS_PARAM: "*",
         OUTSR_PARAM: "102100",
-        GEOMETRY_PARAM: json.dumps(home_address),
+        **geometry_params
     }
+
     response = requests.get(url, headers=headers, params=params)
 
     logger.debug('Got response from Brookline arcgis: ' + repr(response.json()))
@@ -146,7 +143,18 @@ def get_sorted_police_station_json(address: str,
     :return: Json data object response
     """
     logger.debug('Finding closest police station for address: ' + str(address))
-    return _get_sorted_features_json(address, MapFeatureID.POLICE_STATION)
+    home_address = _geocode_address(address)
+    coordinates = '[{},{}]'.format(home_address['x'], home_address['y']) 
+    if 'z' in home_address:
+        del home_address['z']
+            
+    geometry_params = {
+        SPATIAL_REL_PARAM: "esriSpatialRelIntersects",
+        GEOMETRY_TYPE_PARAM: "esriGeometryPoint",
+        GEOMETRY_PARAM: coordinates,
+    }
+
+    return _get_sorted_features_json(address, MapFeatureID.POLICE_STATION, geometry_params, home_address)
 
 
 def get_polling_locations(address: str,
@@ -165,7 +173,8 @@ def get_polling_locations(address: str,
 
 
 def get_trash_day_json(address: str,
-                       _get_sorted_features_json: callable = get_sorted_features_json) -> object:
+                       _get_sorted_features_json: callable = get_sorted_features_json,
+                       _geocode_address: callable = geocode_address) -> object:
     """
     Queries the Brookline arcgis server for trash day
 
@@ -173,4 +182,14 @@ def get_trash_day_json(address: str,
     :return: Json object response from the server
     """
     logger.debug('Finding trash day for address: ' + str(address))
-    return _get_sorted_features_json(address, MapFeatureID.TRASH_DAY)
+    home_address = _geocode_address(address)
+    if 'z' in home_address:
+        del home_address['z']
+            
+    geometry_params = {
+        SPATIAL_REL_PARAM: "esriSpatialRelWithin",
+        GEOMETRY_TYPE_PARAM: "esriGeometryPoint",
+        GEOMETRY_PARAM: json.dumps(home_address),
+    }
+
+    return _get_sorted_features_json(address, MapFeatureID.TRASH_DAY, geometry_params)
