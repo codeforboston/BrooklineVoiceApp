@@ -1,12 +1,13 @@
 """ Utilities for interacting with the Brookline argGIS server """
-from enum import Enum
 import json
 import logging
 import typing
+from enum import Enum
 
 import requests
 
 from mycity.utils import address_utils
+from mycity.utils.exceptions import NoAddressFound
 
 logger = logging.getLogger(__name__)
 
@@ -69,8 +70,11 @@ def get_first_address_candidate(address: str,
         response = session.get(GEOCODE_URL, params=url_params)
 
     logger.debug('Got address candidate response: ' + str(response))
-    candidate_address = response.json()[CANDIDATES_PATH][0]
-    spatial_reference = response.json()[SPATIAL_REFERENCE_PATH]
+    try:
+        candidate_address = response.json()[CANDIDATES_PATH][0]
+        spatial_reference = response.json()[SPATIAL_REFERENCE_PATH]
+    except (IndexError, KeyError):
+        raise NoAddressFound()
     return candidate_address, spatial_reference
 
 
@@ -83,12 +87,9 @@ def geocode_address(address: str,
     :param _get_first_address_candidate: injectable function for test
     :return: Dictionary of coordinates with associated spatial reference
     """
-    try:
-        candidate, spatial_reference = _get_first_address_candidate(address)
-        location = candidate[LOCATION_PATH]
-        location[SPATIAL_REFERENCE_PATH] = spatial_reference
-    except IndexError:
-        return {}
+    candidate, spatial_reference = _get_first_address_candidate(address)
+    location = candidate[LOCATION_PATH]
+    location[SPATIAL_REFERENCE_PATH] = spatial_reference
 
     return location
 
