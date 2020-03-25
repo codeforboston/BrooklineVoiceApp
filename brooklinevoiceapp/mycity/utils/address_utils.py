@@ -1,5 +1,12 @@
-from math import sin, cos, radians, acos, degrees
 import logging
+from math import (
+    acos,
+    cos,
+    degrees,
+    radians,
+    sin,
+    sqrt
+)
 from operator import itemgetter
 
 from mycity.intents import intent_constants
@@ -52,12 +59,7 @@ def get_distance(start, end):
     lat1 = start['y']
     lon2 = end['x']
     lat2 = end['y']
-    theta = lon1 - lon2
-    dist = sin(radians(lat1)) * sin(radians(lat2)) \
-        + cos(radians(lat1)) * cos(radians(lat2)) * cos(radians(theta))
-    dist = acos(dist)
-    dist = degrees(dist)
-    dist = dist * MINUTES_PER_DEGREE * STATUTE_MILES_PER_NAUTICAL_MILE
+    dist = sqrt((lon2 - lon1)**2 + (lat2 - lat1)**2)
     return (dist * 10) / 10
 
 
@@ -72,8 +74,9 @@ def get_sorted_features(home_coordinates, features):
     :return: The closest feature.
     """
     # If we don't have an x or y value for home, we can't calculate a closest feature.
+    logger.debug("home coords:" + str(home_coordinates))
+    logger.debug("features:" + str(features))
     if 'x' not in home_coordinates or 'y' not in home_coordinates:
         return []
 
-    logger.debug("features:{}".format(features))
     return sorted(features, key=lambda feature: get_distance(home_coordinates, feature['geometry']))

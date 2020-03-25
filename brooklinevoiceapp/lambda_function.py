@@ -31,6 +31,7 @@ def lambda_handler(event, context):
     logger.debug('Amazon request received: ' + str(event))
 
     model = platform_to_mycity_request(event)
+    logger.debug("model:" + str(model))
     response = mycity_response_to_platform(execute_request(model))
     logger.debug(str(response))
     return response

@@ -3,7 +3,7 @@ import logging
 from mycity.intents import intent_constants
 from mycity.mycity_response_data_model import MyCityResponseDataModel
 from mycity.utils.address_utils import set_address_in_session
-from mycity.utils.brookline_arcgis_api_utils import get_nearest_library_json
+from mycity.utils.brookline_arcgis_api_utils import get_sorted_library_json
 
 logger = logging.getLogger(__name__)
 
@@ -51,10 +51,10 @@ def _get_output_speech_for_address(address):
     """
 
     logger.debug("Getting response for address " + str(address))
-    response = get_nearest_library_json(address)
-    logger.debug("library response:", response)
+    features = get_sorted_library_json(address)
+    logger.debug("library response:", features)
     try:
-        first_feature = response[FEATURES_PATH][0]
+        first_feature = features[0]
         facility_name = first_feature[ATTRIBUTES_PATH][NAME_PATH]
         facility_address = first_feature[ATTRIBUTES_PATH][FULLADDR_PATH]
     except IndexError:
