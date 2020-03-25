@@ -6,6 +6,7 @@ import logging
 
 from mycity.intents.police_station_intent import find_closest_police_station
 from mycity.intents.trash_day_intent import get_trash_pickup_info
+from mycity.intents.fallback_intent import get_fallback_intent_response
 from mycity.mycity_response_data_model import MyCityResponseDataModel
 from mycity.utils.exceptions import BaseOutputSpeechError
 
@@ -109,6 +110,8 @@ def on_intent(mycity_request):
             return find_closest_police_station(mycity_request)
         elif mycity_request.intent_name == "TrashDayIntent":
             return get_trash_pickup_info(mycity_request)
+        elif mycity_request.intent_name == "AMAZON.FallbackIntent":
+            return get_fallback_intent_response(mycity_request)
         else:
             raise ValueError("Invalid Intent")
     except BaseOutputSpeechError as e:
