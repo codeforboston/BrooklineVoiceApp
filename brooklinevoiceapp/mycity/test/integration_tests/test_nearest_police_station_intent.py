@@ -36,8 +36,8 @@ class PoliceStationTestCase(mix_ins.RepromptTextTestMixIn,
         Patching out the functions in PoliceStationIntent that use requests.get
         """
         super().setUp()
-        self.mock_requests(get_data=copy.deepcopy(test_constants.GET_ADDRESS_CANDIDATES_API_MOCK),
-                           post_data=copy.deepcopy(test_constants.GET_POLICE_STATION_API_MOCK))
+        self.mock_requests(get_geocode_data=copy.deepcopy(test_constants.GET_ADDRESS_CANDIDATES_API_MOCK),
+                           get_data=copy.deepcopy(test_constants.GET_POLICE_STATION_API_MOCK))
 
     def testResponseContainsNameAndFullAddress(self):
         response = self.controller.on_intent(self.request)
@@ -46,7 +46,7 @@ class PoliceStationTestCase(mix_ins.RepromptTextTestMixIn,
             self.assertIn(feature[ATTRIBUTES][NAME], response.output_speech)
 
     def testNoFeatureResults(self):
-        self.mock_requests(get_data=copy.deepcopy(test_constants.GET_ADDRESS_CANDIDATES_API_MOCK),
-                           post_data=copy.deepcopy(test_constants.NO_RESULTS_GET_POLICE_STATION_API_MOCK))
+        self.mock_requests(get_geocode_data=copy.deepcopy(test_constants.GET_ADDRESS_CANDIDATES_API_MOCK),
+                           get_data=copy.deepcopy(test_constants.NO_RESULTS_GET_POLICE_STATION_API_MOCK))
         response = self.controller.on_intent(self.request)
         self.assertEqual(response.output_speech, NO_RESULTS_RESPONSE)

@@ -46,14 +46,19 @@ class IntentBaseCase(unittest.TestCase):
         self.request = None
         utils.requests = self._requests_original
 
+    def get_side_effect(self, status=200, response_data=None):
+        returned_mock = mock.MagicMock(return_value=ResponseStub(status, response_data))
+        return returned_mock.return_value
+
     def mock_requests(
             self,
             get_status=200,
             post_status=200,
+            get_geocode_data=None,
             get_data=None,
             post_data=None):
         mock_requests = requests
         # replace request Session REST methods with mocks
-        mock_requests.Session.get = mock.MagicMock(return_value=ResponseStub(get_status, get_data))
+        mock_requests.Session.get = mock.MagicMock(side_effect=[ResponseStub(get_status, get_geocode_data),ResponseStub(get_status, get_data)])
         mock_requests.Session.post = mock.MagicMock(return_value=ResponseStub(post_status, post_data))
         utils.requests = mock_requests
