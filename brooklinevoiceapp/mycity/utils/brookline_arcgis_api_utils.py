@@ -123,8 +123,8 @@ def get_sorted_features_json(address: str,
         OUTSR_PARAM: "102100",
         **geometry_params
     }
-
-    response = requests.get(url, headers=headers, params=params)
+    with _requests.Session() as session:
+        response = session.get(url, headers=headers, params=params)
 
     logger.debug('Got response from Brookline arcgis: ' + repr(response.json()))
     features = response.json()[FEATURES_PATH]
