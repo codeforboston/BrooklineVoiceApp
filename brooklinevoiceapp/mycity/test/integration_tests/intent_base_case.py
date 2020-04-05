@@ -46,10 +46,6 @@ class IntentBaseCase(unittest.TestCase):
         self.request = None
         utils.requests = self._requests_original
 
-    def get_side_effect(self, status=200, response_data=None):
-        returned_mock = mock.MagicMock(return_value=ResponseStub(status, response_data))
-        return returned_mock.return_value
-
     def mock_requests(
             self,
             get_status=200,
