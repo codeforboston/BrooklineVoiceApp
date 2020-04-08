@@ -1,0 +1,21 @@
+language: python
+
+python:
+  - "3.7"
+
+install:
+  - pip install -r requirements.txt
+
+script:
+  - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+  - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
+  - sh run_tests.sh
+  - python deploy_tools.py -p
+
+branches:
+  only:
+    - gh-pages
+    - /.*/ # test all branches
+
+after_success:
+  - codecov
