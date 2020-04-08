@@ -9,7 +9,6 @@ from mycity import mycity_request_data_model as req
 from mycity.intents import intent_constants
 from mycity.utils import brookline_arcgis_api_utils as utils
 
-
 ###############################################################################
 # TestCase parent class for all intent TestCases, which are integration tests #
 # to see if any changes in codebase have broken response-request model.       #
@@ -51,10 +50,11 @@ class IntentBaseCase(unittest.TestCase):
             self,
             get_status=200,
             post_status=200,
+            get_geocode_data=None,
             get_data=None,
             post_data=None):
         mock_requests = requests
         # replace request Session REST methods with mocks
-        mock_requests.Session.get = mock.MagicMock(return_value=ResponseStub(get_status, get_data))
+        mock_requests.Session.get = mock.MagicMock(side_effect=[ResponseStub(get_status, get_geocode_data),ResponseStub(get_status, get_data)])
         mock_requests.Session.post = mock.MagicMock(return_value=ResponseStub(post_status, post_data))
         utils.requests = mock_requests

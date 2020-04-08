@@ -174,6 +174,10 @@ GET_TRASH_PICKUP_API_MOCK = {
                 "SATURDAY": "No",
                 "SUNDAY": "No",
                 "GlobalID": "{20538BBF-EB83-4CCD-B1E8-93EF36554413}"
+            },
+            "geometry": {
+                "x": -71.121409303637222,
+                "y": 42.333789044263746
             }
         }
     ]
@@ -283,3 +287,73 @@ GET_POLLING_LOCATIONS_API_MOCK = {
     ]
 }
 
+GET_LIBRARY_API_MOCK = {
+  "features": [
+    {
+      "attributes": {
+        "OBJECTID": 1,
+        "FACILITYID": "None",
+        "NAME": "Coolidge Corner Library",
+        "OWNER": "Town of Brookline",
+        "OWNTYPE": "None",
+        "SUBTYPEFIELD": "None",
+        "FEATURECODE": "None",
+        "FULLADDR": "31 Pleasant St, Brookline, MA 02446",
+        "AGENCYURL": "http://www.brooklinelibrary.org/",
+        "OPERDAYS": "Other",
+        "OPERHOURS": "Other",
+        "CONTACT": "None",
+        "PHONE": "617-730-2380",
+        "EMAIL": "http://www.brooklinelibrary.org/about/email"
+      },
+      "geometry": {
+        "x": -7916949.550832789,
+        "y": 5212579.537906414
+      }
+    },
+    {
+      "attributes": {
+        "OBJECTID": 2,
+        "FACILITYID": "None",
+        "NAME": "Main Library",
+        "OWNER": "Town of Brookline",
+        "OWNTYPE": "None",
+        "SUBTYPEFIELD": "None",
+        "FEATURECODE": "None",
+        "FULLADDR": "361 Washington St, Brookline, MA 02445",
+        "AGENCYURL": "http://www.brooklinelibrary.org/",
+        "OPERDAYS": "Other",
+        "OPERHOURS": "Other",
+        "CONTACT": "None",
+        "PHONE": "617-730-2370",
+        "EMAIL": "http://www.brooklinelibrary.org/about/email"
+      },
+      "geometry": {
+        "x": -7917194.260973867,
+        "y": 5211229.5272506215
+      }
+    },
+    {
+      "attributes": {
+        "OBJECTID": 3,
+        "FACILITYID": "None",
+        "NAME": "Putterham Branch Library",
+        "OWNER": "Town of Brookline",
+        "OWNTYPE": "None",
+        "SUBTYPEFIELD": "None",
+        "FEATURECODE": "None",
+        "FULLADDR": "959 W Roxbury Pky, Brookline, MA 02467",
+        "AGENCYURL": "http://www.brooklinelibrary.org/",
+        "OPERDAYS": "Other",
+        "OPERHOURS": "Other",
+        "CONTACT": "None",
+        "PHONE": "617-730-2385",
+        "EMAIL": "http://www.brooklinelibrary.org/about/email"
+      },
+      "geometry": {
+        "x": -7920391.679580264,
+        "y": 5206399.414108847
+      }
+    }
+  ]
+}

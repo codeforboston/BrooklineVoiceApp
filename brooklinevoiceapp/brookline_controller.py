@@ -5,9 +5,10 @@ Dispatches MyCityRequestsObjects to the appropriate Brookline intent
 import logging
 
 from mycity.intents.police_station_intent import find_closest_police_station
+from mycity.intents.library_intent import find_closest_library
 from mycity.intents.trash_day_intent import get_trash_pickup_info
-from mycity.intents.polling_stations_intent import get_polling_location_info
 from mycity.mycity_response_data_model import MyCityResponseDataModel
+from mycity.utils.exceptions import BaseOutputSpeechError
 
 logger = logging.getLogger(__name__)
 
@@ -104,13 +105,16 @@ def on_intent(mycity_request):
     :raises: ValueError
     """
 
-    if mycity_request.intent_name == "PoliceStationIntent":
-        return find_closest_police_station(mycity_request)
-    elif mycity_request.intent_name == "TrashDayIntent":
-        return get_trash_pickup_info(mycity_request)
-    elif mycity_request.intent_name == "PollingStationIntent":
-        return get_polling_location_info(mycity_request)
-    else:
-        raise ValueError("Invalid Intent")
-        
-
+    try:
+        if mycity_request.intent_name == "PoliceStationIntent":
+            return find_closest_police_station(mycity_request)
+        elif mycity_request.intent_name == "TrashDayIntent":
+            return get_trash_pickup_info(mycity_request)
+        elif mycity_request.intent_name == "LibraryIntent":
+            return find_closest_library(mycity_request)
+        else:
+            raise ValueError("Invalid Intent")
+    except BaseOutputSpeechError as e:
+        response = on_session_ended(mycity_request)
+        response.output_speech = e.output_speech
+        return response

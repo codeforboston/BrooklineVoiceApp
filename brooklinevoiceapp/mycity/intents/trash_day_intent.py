@@ -13,7 +13,6 @@ CARD_TITLE_TRASH_DAY = "Trash Day"
 OUTPUT_SPEECH_TEMPLATE = "Trash is picked up on {}"
 
 # Strings used in parsing json data returned by server
-FEATURES_PATH = "features"
 ATTRIBUTES_PATH = "attributes"
 NAME_PATH = "NAME"
 
@@ -52,7 +51,7 @@ def _get_output_speech_for_address(address):
     """
     response = get_trash_day_json(address)
     try:
-        first_feature = response[FEATURES_PATH][0]
+        first_feature = response[0]
 
         # Trash day is returned as "<DAY OF THE WEEK> Trash". We just want the
         # day so we split immediately
