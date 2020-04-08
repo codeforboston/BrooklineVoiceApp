@@ -35,6 +35,7 @@ class MapFeatureID(Enum):
     """Brookline GIS feature types"""
     POLICE_STATION = 10
     TRASH_DAY = 12
+    LIBRARY = 9
     POLLING_LOCATION = 21
 
 class NonSortedFeatures(Enum):
@@ -122,8 +123,8 @@ def get_sorted_features_json(address: str,
         OUTSR_PARAM: "102100",
         **geometry_params
     }
-
-    response = requests.get(url, headers=headers, params=params)
+    with _requests.Session() as session:
+        response = session.get(url, headers=headers, params=params)
 
     logger.debug('Got response from Brookline arcgis: ' + repr(response.json()))
     features = response.json()[FEATURES_PATH]
@@ -157,6 +158,30 @@ def get_sorted_police_station_json(address: str,
 
     return _get_sorted_features_json(address, MapFeatureID.POLICE_STATION, geometry_params, home_address)
 
+
+def get_sorted_library_json(address: str,
+                                   _get_sorted_features_json: callable = get_sorted_features_json,
+                                   _geocode_address: callable = geocode_address) -> object:
+    """
+    Queries the Brookline arcgis server for the nearest library
+
+    :param address: Address string to query
+    :return: Json data object response
+    """
+    logger.debug('Finding closest library for address: ' + str(address))
+    home_address = _geocode_address(address)
+    coordinates = '[{},{}]'.format(home_address['x'], home_address['y']) 
+
+    if 'z' in home_address:
+        del home_address['z']
+            
+    geometry_params = {
+        SPATIAL_REL_PARAM: "esriSpatialRelIntersects",
+        GEOMETRY_TYPE_PARAM: "esriGeometryPoint",
+        GEOMETRY_PARAM: coordinates,
+    }
+
+    return _get_sorted_features_json(address, MapFeatureID.LIBRARY, geometry_params, home_address)
 
 def get_polling_locations(address: str,
                           _get_sorted_features_json: callable = get_sorted_features_json,

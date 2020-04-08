@@ -5,6 +5,7 @@ from math import (
     degrees,
     radians,
     sin,
+    sqrt
 )
 from operator import itemgetter
 
@@ -58,12 +59,7 @@ def get_distance(start, end):
     lat1 = start['y']
     lon2 = end['x']
     lat2 = end['y']
-    theta = lon1 - lon2
-    dist = sin(radians(lat1)) * sin(radians(lat2)) \
-        + cos(radians(lat1)) * cos(radians(lat2)) * cos(radians(theta))
-    dist = acos(dist)
-    dist = degrees(dist)
-    dist = dist * MINUTES_PER_DEGREE * STATUTE_MILES_PER_NAUTICAL_MILE
+    dist = sqrt((lon2 - lon1)**2 + (lat2 - lat1)**2)
     return (dist * 10) / 10
 
 

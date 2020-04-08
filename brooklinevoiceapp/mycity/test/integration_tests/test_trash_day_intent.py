@@ -1,7 +1,10 @@
 """ Integration tests for TrashDayIntent """
 import copy
 
-from mycity.intents import intent_constants, trash_day_intent as trash_intent
+from mycity.intents import (
+    intent_constants,
+    trash_day_intent as trash_intent,
+)
 from mycity.test import test_constants
 from mycity.test.integration_tests import (
     intent_base_case as base_case,
@@ -22,15 +25,15 @@ class TrashPickupTestCase(mix_ins.RepromptTextTestMixIn,
         super().setUp()
 
         # Patch requests.get in TrashDayIntent
-        self.mock_requests(get_data=copy.deepcopy(test_constants.GET_ADDRESS_CANDIDATES_API_MOCK),
-                           post_data=copy.deepcopy(test_constants.GET_TRASH_PICKUP_API_MOCK))
+        self.mock_requests(get_geocode_data=copy.deepcopy(test_constants.GET_ADDRESS_CANDIDATES_API_MOCK),
+                           get_data=copy.deepcopy(test_constants.GET_TRASH_PICKUP_API_MOCK))
 
     def test_response_contains_day_of_the_week(self):
         response = self.controller.on_intent(self.request)
         self.assertTrue("Wednesday" in response.output_speech)
 
     def test_no_feature_results(self):
-        self.mock_requests(get_data=copy.deepcopy(test_constants.GET_ADDRESS_CANDIDATES_API_MOCK),
-                           post_data=copy.deepcopy(test_constants.NO_RESPONSE_TRASH_PICKUP_API_MOCK))
+        self.mock_requests(get_geocode_data=copy.deepcopy(test_constants.GET_ADDRESS_CANDIDATES_API_MOCK),
+                            get_data=copy.deepcopy(test_constants.NO_RESPONSE_TRASH_PICKUP_API_MOCK))
         response = self.controller.on_intent(self.request)
         self.assertEqual(response.output_speech, intent_constants.NO_RESULTS_RESPONSE)

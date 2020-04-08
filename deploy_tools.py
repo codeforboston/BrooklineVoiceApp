@@ -11,7 +11,10 @@ import os
 import re
 import shutil
 import stat
-from subprocess import PIPE, run
+from subprocess import (
+    PIPE,
+    run,
+)
 import time
 import zipfile
 
