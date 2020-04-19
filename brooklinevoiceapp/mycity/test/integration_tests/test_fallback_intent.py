@@ -7,9 +7,9 @@ from mycity.test.integration_tests import (
     intent_test_mixins as mix_ins,
 )
 
-class TrashPickupTestCase(mix_ins.RepromptTextTestMixIn,
-                          mix_ins.CardTitleTestMixIn,
-                          base_case.IntentBaseCase):
+class FallbackIntentTestCase(mix_ins.RepromptTextTestMixIn,
+                             mix_ins.CardTitleTestMixIn,
+                             base_case.IntentBaseCase):
     intent_to_test = "AMAZON.FallbackIntent"
     expected_title = fallback_intent.CARD_TITLE
     returns_reprompt_text = False
