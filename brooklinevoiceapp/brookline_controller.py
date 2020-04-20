@@ -115,9 +115,30 @@ def on_intent(mycity_request):
             return find_closest_library(mycity_request)
         elif mycity_request.intent_name == "AMAZON.FallbackIntent":
             return get_fallback_intent_response(mycity_request)
+        elif mycity_request.intent_name == "AMAZON.StopIntent":
+            return handle_session_end_request(mycity_request)
         else:
             raise ValueError("Invalid Intent")
     except BaseOutputSpeechError as e:
         response = on_session_ended(mycity_request)
         response.output_speech = e.output_speech
         return response
+
+
+def handle_session_end_request(mycity_request):
+    """
+    Ends a user's session (with the Brookline Info skill).
+    Called when request intent is AMAZON.StopIntent.
+
+    :param mycity_request: MyCityRequestDataModel object
+    :return: MyCityResponseDataModel object that will end a user's session
+    """
+    logger.debug('Closing')
+    mycity_response = MyCityResponseDataModel()
+    mycity_response.session_attributes = mycity_request.session_attributes
+    mycity_response.card_title = "Brookline Info - Thanks"
+    mycity_response.output_speech = \
+        "Thank you for using the Brookline Info skill. " \
+        "See you next time!"
+    mycity_response.should_end_session = True
+    return mycity_response
