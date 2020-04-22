@@ -14,6 +14,11 @@ from mycity.utils.exceptions import BaseOutputSpeechError
 logger = logging.getLogger(__name__)
 
 
+LAUNCH_SPEECH = "Welcome to the Brookline Info skill. How can I help you?"
+LAUNCH_REPROMPT_SPEECH = "You can ask about the nearest city services."
+NO_REQUEST_SPEECH = "Hello from Brookline! We do not support that yet"
+
+
 def execute_request(mycity_request):
     """
     Executes a request to the town of Brookline available intents
@@ -32,7 +37,7 @@ def execute_request(mycity_request):
         response = on_session_ended(mycity_request)
     else:
         response = MyCityResponseDataModel()
-        response.output_speech = "Hello from Brookline! We do not support that yet"
+        response.output_speech = NO_REQUEST_SPEECH
 
     response.session_attributes = mycity_request.session_attributes
     return response
@@ -69,14 +74,12 @@ def get_welcome_response(mycity_request):
     mycity_response = MyCityResponseDataModel()
     mycity_response.session_attributes = mycity_request.session_attributes
     mycity_response.card_title = "Welcome"
-    mycity_response.output_speech = \
-        "Welcome to the Brookline Info skill. How can I help you? "
+    mycity_response.output_speech = LAUNCH_SPEECH
 
     # If the user either does not reply to the welcome message or says
     # something that is not understood, they will be prompted again with
     # this text.
-    mycity_response.reprompt_text = \
-        "You can ask about the nearest city services."
+    mycity_response.reprompt_text = LAUNCH_REPROMPT_SPEECH
     mycity_response.should_end_session = False
     return mycity_response
 
