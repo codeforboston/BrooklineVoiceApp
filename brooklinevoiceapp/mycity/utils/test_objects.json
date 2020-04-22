@@ -82,7 +82,7 @@
 		"timestamp": "2020-02-15T21:28:27Z",
 		"locale": "en-US",
 		"intent": {
-			"name": "LibraryIntent",
+			"name": "PollingLocationIntent",
 			"confirmationStatus": "NONE",
 			"slots": {
 				"Address": {

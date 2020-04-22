@@ -39,16 +39,10 @@ class GISUtilitiesTestCase(base.BaseTestCase):
         result = utils.get_trash_day_json(self.test_address, mock_call)
         self.assertEqual(result, test_constants.GET_TRASH_PICKUP_API_MOCK)
 
-    def test_get_polling_locations_json(self):
-        mock_nearest_feature_call = mock.MagicMock(return_value=test_constants.GET_POLLING_LOCATIONS_API_MOCK)
+    def test_get_voting_precinct_json(self):
+        mock_nearest_feature_call = mock.MagicMock(return_value=test_constants.GET_VOTING_PRECINCT_API_MOCK)
         mock_geocode_call = mock.MagicMock(return_value=test_constants.LOCATION_MOCK)
-<<<<<<< HEAD
-        result = utils.get_polling_locations_json(self.test_address,
-                                                  _get_nearest_feature_json=mock_nearest_feature_call,
+        result = utils.get_voting_precinct_json(self.test_address,
+                                                  _get_sorted_features_json=mock_nearest_feature_call,
                                                   _geocode_address=mock_geocode_call)
-=======
-        result = utils.get_sorted_police_station_json(self.test_address,
-                                                      _get_sorted_features_json=mock_nearest_feature_call,
-                                                      _geocode_address=mock_geocode_call)
->>>>>>> 12c557e06c8faa708f5c35d1d87dbae214492877
-        self.assertEqual(result, test_constants.GET_POLLING_LOCATIONS_API_MOCK)
+        self.assertEqual(result, test_constants.GET_VOTING_PRECINCT_API_MOCK)
