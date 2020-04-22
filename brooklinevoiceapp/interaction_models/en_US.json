@@ -66,6 +66,29 @@
                     ]
                 },
                 {
+                    "name": "SchoolDistrictIntent",
+                    "slots": [
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "samples": [
+                                "I live at {Address}",
+                                "I am at {Address}",
+                                "{Address}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "closest school district",
+                        "school district near me",
+                        "school district",
+                        "where is the closest school district",
+                        "closest school district to {Address}",
+                        "school district near {Address}",
+                        "where is the closest school district to {Address}"
+                    ]
+                },
+                {
                     "name": "TrashDayIntent",
                     "slots": [
                         {
@@ -116,6 +139,22 @@
                 },
                 {
                     "name": "LibraryIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.AskAddress"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "SchoolDistrictIntent",
                     "confirmationRequired": false,
                     "prompts": {},
                     "slots": [
