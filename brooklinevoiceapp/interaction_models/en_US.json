@@ -107,8 +107,8 @@
                         }
                     ],
                     "samples": [
-                        "Where can I vote?",
-                        "Where is my voting location?",
+                        "Where can I vote",
+                        "Where is my voting location",
                         "Where is my polling location",
                         "Where can I vote at {Address}"
                     ]
@@ -167,7 +167,7 @@
                     ]
                 },
                 {
-                    "name": "PollingStationIntent",
+                    "name": "VotingPrecinctIntent",
                     "delegationStrategy": "SKILL_RESPONSE",
                     "confirmationRequired": false,
                     "prompts": {},
