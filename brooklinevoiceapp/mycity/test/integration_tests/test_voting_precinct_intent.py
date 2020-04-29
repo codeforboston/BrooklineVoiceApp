@@ -1,4 +1,4 @@
-""" Integration tests for PollingStationIntent """
+""" Integration tests for VotingPrecinctIntent """
 
 import copy
 from mycity.test import test_constants

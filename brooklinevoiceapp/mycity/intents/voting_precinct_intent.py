@@ -1,4 +1,4 @@
-""" Intent for responding to polling station requests """
+""" Intent for responding to voting precinct requests """
 import logging
 from mycity.mycity_response_data_model import MyCityResponseDataModel
 from mycity.intents import intent_constants
@@ -17,11 +17,6 @@ FEATURES_PATH = "features"
 ATTRIBUTES_PATH = "attributes"
 ADDRESS_PATH = "ADDRESS"
 PRECINCT_PATH = "PRECINCTID"
-
-# Request data model strings
-NUMBER_LOCATIONS_SLOT_NAME = "number_requests"
-MAX_LOCATIONS = 10
-DEFAULT_LOCATIONS = 3
 
 def get_voting_precinct(mycity_request):
     """
