@@ -127,7 +127,8 @@ GET_ADDRESS_CANDIDATES_API_MOCK = {
     ]
 }
 
-GEOCODE_ADDRESS_MOCK = [42.35351814, -71.13117064]
+GEOCODE_ADDRESS_MOCK = {
+    'geometry':{'x':-7917110.640673582,'y':5211147.471469648}}
 
 GET_TRASH_PICKUP_API_MOCK = {
     "displayFieldName": "DISTRICTID",
@@ -208,133 +209,282 @@ NO_RESPONSE_TRASH_PICKUP_API_MOCK = {
     },
     "features": []
 }
+NO_RESPONSE_VOTING_PRECINCT_API_MOCK = {
+    "displayFieldName": "NAME",
+    "fieldAliases": {
+        "OBJECTID": "OBJECTID",
+        "PRECINCTID": "Precinct ID",
+        "NAME": "Precinct Name",
+        "COUNTY": "County",
+        "LASTUPDATE": "Last Update Date",
+        "LASTEDITOR": "Last Editor",
+        "SHAPE_Length": "SHAPE_Length",
+        "SHAPE_Area": "SHAPE_Area",
+        "STR_NUM": "STR_NUM",
+        "STREET": "STREET",
+        "ADDRESS": "ADDRESS",
+        "LOC_DESC": "LOC_DESC"
+    },
+    "geometryType": "esriGeometryPolygon",
+    "spatialReference": {
+        "wkid": 102100,
+        "latestWkid": 3857
+    },
+    "fields": [
+        {
+            "name": "OBJECTID",
+            "type": "esriFieldTypeOID",
+            "alias": "OBJECTID"
+        },
+        {
+            "name": "PRECINCTID",
+            "type": "esriFieldTypeString",
+            "alias": "Precinct ID",
+            "length": 10
+        },
+        {
+            "name": "NAME",
+            "type": "esriFieldTypeString",
+            "alias": "Precinct Name",
+            "length": 50
+        },
+        {
+            "name": "COUNTY",
+            "type": "esriFieldTypeString",
+            "alias": "County",
+            "length": 50
+        },
+        {
+            "name": "LASTUPDATE",
+            "type": "esriFieldTypeDate",
+            "alias": "Last Update Date",
+            "length": 8
+        },
+        {
+            "name": "LASTEDITOR",
+            "type": "esriFieldTypeString",
+            "alias": "Last Editor",
+            "length": 50
+        },
+        {
+            "name": "SHAPE_Length",
+            "type": "esriFieldTypeDouble",
+            "alias": "SHAPE_Length"
+        },
+        {
+            "name": "SHAPE_Area",
+            "type": "esriFieldTypeDouble",
+            "alias": "SHAPE_Area"
+        },
+        {
+            "name": "STR_NUM",
+            "type": "esriFieldTypeString",
+            "alias": "STR_NUM",
+            "length": 8
+        },
+        {
+            "name": "STREET",
+            "type": "esriFieldTypeString",
+            "alias": "STREET",
+            "length": 32
+        },
+        {
+            "name": "ADDRESS",
+            "type": "esriFieldTypeString",
+            "alias": "ADDRESS",
+            "length": 64
+        },
+        {
+            "name": "LOC_DESC",
+            "type": "esriFieldTypeString",
+            "alias": "LOC_DESC",
+            "length": 128
+        }
+    ],
+    "features": [
 
-GET_POLLING_LOCATIONS_API_MOCK = {
+    ]
+}
+
+GET_VOTING_PRECINCT_API_MOCK = {
+    "displayFieldName": "NAME",
+    "fieldAliases": {
+        "OBJECTID": "OBJECTID",
+        "PRECINCTID": "Precinct ID",
+        "NAME": "Precinct Name",
+        "COUNTY": "County",
+        "LASTUPDATE": "Last Update Date",
+        "LASTEDITOR": "Last Editor",
+        "SHAPE_Length": "SHAPE_Length",
+        "SHAPE_Area": "SHAPE_Area",
+        "STR_NUM": "STR_NUM",
+        "STREET": "STREET",
+        "ADDRESS": "ADDRESS",
+        "LOC_DESC": "LOC_DESC"
+    },
+    "geometryType": "esriGeometryPolygon",
+    "spatialReference": {
+        "wkid": 102100,
+        "latestWkid": 3857
+    },
+    "fields": [
+        {
+            "name": "OBJECTID",
+            "type": "esriFieldTypeOID",
+            "alias": "OBJECTID"
+        },
+        {
+            "name": "PRECINCTID",
+            "type": "esriFieldTypeString",
+            "alias": "Precinct ID",
+            "length": 10
+        },
+        {
+            "name": "NAME",
+            "type": "esriFieldTypeString",
+            "alias": "Precinct Name",
+            "length": 50
+        },
+        {
+            "name": "COUNTY",
+            "type": "esriFieldTypeString",
+            "alias": "County",
+            "length": 50
+        },
+        {
+            "name": "LASTUPDATE",
+            "type": "esriFieldTypeDate",
+            "alias": "Last Update Date",
+            "length": 8
+        },
+        {
+            "name": "LASTEDITOR",
+            "type": "esriFieldTypeString",
+            "alias": "Last Editor",
+            "length": 50
+        },
+        {
+            "name": "SHAPE_Length",
+            "type": "esriFieldTypeDouble",
+            "alias": "SHAPE_Length"
+        },
+        {
+            "name": "SHAPE_Area",
+            "type": "esriFieldTypeDouble",
+            "alias": "SHAPE_Area"
+        },
+        {
+            "name": "STR_NUM",
+            "type": "esriFieldTypeString",
+            "alias": "STR_NUM",
+            "length": 8
+        },
+        {
+            "name": "STREET",
+            "type": "esriFieldTypeString",
+            "alias": "STREET",
+            "length": 32
+        },
+        {
+            "name": "ADDRESS",
+            "type": "esriFieldTypeString",
+            "alias": "ADDRESS",
+            "length": 64
+        },
+        {
+            "name": "LOC_DESC",
+            "type": "esriFieldTypeString",
+            "alias": "LOC_DESC",
+            "length": 128
+        }
+    ],
     "features": [
         {
             "attributes": {
-                "OBJECTID": 1,
-                "NAME": "Young Israel of Brookline, 62 Green St (Side En",
-                "POLLINGID": "8",
-                "FULLADD": "345 HARVARD ST",
-                "CITY": "Brookline",
-                "STATE": "MA",
-                "CONTACT": "Brookline Town Clerk",
-                "PHONE": "617-730-2010",
-                "EMAIL": "pward@brooklinema.gov",
-                "PRECINCT": "Precinct 8"
+                "OBJECTID": 19,
+                "PRECINCTID": "6",
+                "NAME": "Precinct 6 - Vote at 115 Greenough St",
+                "COUNTY": "Norfolk",
+                "LASTUPDATE": 'null',
+                "LASTEDITOR": 'null',
+                "SHAPE_Length": 15810.092868688193,
+                "SHAPE_Area": 7070142.9764727177,
+                "STR_NUM": "115",
+                "STREET": "GREENOUGH ST",
+                "ADDRESS": "115 GREENOUGH ST",
+                "LOC_DESC": "BHS Schluntz Gymnasium, 115 Greenough Street"
             },
-            "geometry": {
-                "x": -7917111.8624876123,
-                "y": 5212769.3177538002
-            }
-        },
-        {
-            "attributes": {
-                "OBJECTID": 2,
-                "NAME": "(New) Lincoln School, 19 Kennard Road",
-                "POLLINGID": "5",
-                "FULLADD": "19 KENNARD RD",
-                "CITY": "Brookline",
-                "STATE": "MA",
-                "CONTACT": "Brookline Town Clerk",
-                "PHONE": "617-730-2010",
-                "EMAIL": "pward@brooklinema.gov",
-                "PRECINCT": "Precinct 5"
-            },
-            "geometry": {
-                "x": -7918086.1184908934,
-                "y": 5210343.692659962
-            }
-        },
-        {
-            "attributes": {
-                "OBJECTID": 3,
-                "NAME": "Heath School Gymnasium, 100 Eliot Street",
-                "POLLINGID": "14",
-                "FULLADD": "100 ELIOT ST",
-                "CITY": "Brookline",
-                "STATE": "MA",
-                "CONTACT": "Brookline Town Clerk",
-                "PHONE": "617-730-2010",
-                "EMAIL": "pward@brooklinema.gov",
-                "PRECINCT": "Precinct 14"
-            },
-            "geometry": {
-                "x": -7920158.8921198044,
-                "y": 5210251.6698454535
-            }
         }
     ]
 }
 
 GET_LIBRARY_API_MOCK = {
-  "features": [
-    {
-      "attributes": {
-        "OBJECTID": 1,
-        "FACILITYID": "None",
-        "NAME": "Coolidge Corner Library",
-        "OWNER": "Town of Brookline",
-        "OWNTYPE": "None",
-        "SUBTYPEFIELD": "None",
-        "FEATURECODE": "None",
-        "FULLADDR": "31 Pleasant St, Brookline, MA 02446",
-        "AGENCYURL": "http://www.brooklinelibrary.org/",
-        "OPERDAYS": "Other",
-        "OPERHOURS": "Other",
-        "CONTACT": "None",
-        "PHONE": "617-730-2380",
-        "EMAIL": "http://www.brooklinelibrary.org/about/email"
-      },
-      "geometry": {
-        "x": -7916949.550832789,
-        "y": 5212579.537906414
-      }
-    },
-    {
-      "attributes": {
-        "OBJECTID": 2,
-        "FACILITYID": "None",
-        "NAME": "Main Library",
-        "OWNER": "Town of Brookline",
-        "OWNTYPE": "None",
-        "SUBTYPEFIELD": "None",
-        "FEATURECODE": "None",
-        "FULLADDR": "361 Washington St, Brookline, MA 02445",
-        "AGENCYURL": "http://www.brooklinelibrary.org/",
-        "OPERDAYS": "Other",
-        "OPERHOURS": "Other",
-        "CONTACT": "None",
-        "PHONE": "617-730-2370",
-        "EMAIL": "http://www.brooklinelibrary.org/about/email"
-      },
-      "geometry": {
-        "x": -7917194.260973867,
-        "y": 5211229.5272506215
-      }
-    },
-    {
-      "attributes": {
-        "OBJECTID": 3,
-        "FACILITYID": "None",
-        "NAME": "Putterham Branch Library",
-        "OWNER": "Town of Brookline",
-        "OWNTYPE": "None",
-        "SUBTYPEFIELD": "None",
-        "FEATURECODE": "None",
-        "FULLADDR": "959 W Roxbury Pky, Brookline, MA 02467",
-        "AGENCYURL": "http://www.brooklinelibrary.org/",
-        "OPERDAYS": "Other",
-        "OPERHOURS": "Other",
-        "CONTACT": "None",
-        "PHONE": "617-730-2385",
-        "EMAIL": "http://www.brooklinelibrary.org/about/email"
-      },
-      "geometry": {
-        "x": -7920391.679580264,
-        "y": 5206399.414108847
-      }
-    }
-  ]
+    "features": [
+        {
+            "attributes": {
+                "OBJECTID": 1,
+                "FACILITYID": "None",
+                "NAME": "Coolidge Corner Library",
+                "OWNER": "Town of Brookline",
+                "OWNTYPE": "None",
+                "SUBTYPEFIELD": "None",
+                "FEATURECODE": "None",
+                "FULLADDR": "31 Pleasant St, Brookline, MA 02446",
+                "AGENCYURL": "http://www.brooklinelibrary.org/",
+                "OPERDAYS": "Other",
+                "OPERHOURS": "Other",
+                "CONTACT": "None",
+                "PHONE": "617-730-2380",
+                "EMAIL": "http://www.brooklinelibrary.org/about/email"
+            },
+            "geometry": {
+                "x": -7916949.550832789,
+                "y": 5212579.537906414
+            }
+        },
+        {
+            "attributes": {
+                "OBJECTID": 2,
+                "FACILITYID": "None",
+                "NAME": "Main Library",
+                "OWNER": "Town of Brookline",
+                "OWNTYPE": "None",
+                "SUBTYPEFIELD": "None",
+                "FEATURECODE": "None",
+                "FULLADDR": "361 Washington St, Brookline, MA 02445",
+                "AGENCYURL": "http://www.brooklinelibrary.org/",
+                "OPERDAYS": "Other",
+                "OPERHOURS": "Other",
+                "CONTACT": "None",
+                "PHONE": "617-730-2370",
+                "EMAIL": "http://www.brooklinelibrary.org/about/email"
+            },
+            "geometry": {
+                "x": -7917194.260973867,
+                "y": 5211229.5272506215
+            }
+        },
+        {
+            "attributes": {
+                "OBJECTID": 3,
+                "FACILITYID": "None",
+                "NAME": "Putterham Branch Library",
+                "OWNER": "Town of Brookline",
+                "OWNTYPE": "None",
+                "SUBTYPEFIELD": "None",
+                "FEATURECODE": "None",
+                "FULLADDR": "959 W Roxbury Pky, Brookline, MA 02467",
+                "AGENCYURL": "http://www.brooklinelibrary.org/",
+                "OPERDAYS": "Other",
+                "OPERHOURS": "Other",
+                "CONTACT": "None",
+                "PHONE": "617-730-2385",
+                "EMAIL": "http://www.brooklinelibrary.org/about/email"
+            },
+            "geometry": {
+                "x": -7920391.679580264,
+                "y": 5206399.414108847
+            }
+        }
+    ]
 }

@@ -92,9 +92,28 @@
                         "when is trash picked up at {Address}",
                         "When is trash day at {Address}"
                     ]
+                },
+                {
+                    "name": "VotingPrecinctIntent",
+                    "slots": [
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "samples": [
+                                "The address is {Address}",
+                                "My address is {Address}",
+                                "{Address}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "Where can I vote",
+                        "Where is my voting location",
+                        "Where is my polling location",
+                        "Where can I vote at {Address}"
+                    ]
                 }
-            ],
-            "types": []
+            ]
         },
         "dialog": {
             "intents": [
@@ -142,7 +161,24 @@
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": "Elicit.Slot.1200741587813.991075352244"
+                                "elicitation": "Elicit.Slot.AskAddress"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "VotingPrecinctIntent",
+                    "delegationStrategy": "SKILL_RESPONSE",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Address",
+                            "type": "AMAZON.StreetAddress",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.AskAddress"
                             }
                         }
                     ]
@@ -153,15 +189,6 @@
         "prompts": [
             {
                 "id": "Elicit.Slot.AskAddress",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What is your address?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.1200741587813.991075352244",
                 "variations": [
                     {
                         "type": "PlainText",
