@@ -120,12 +120,17 @@ def on_intent(mycity_request):
             return find_closest_library(mycity_request)
         elif mycity_request.intent_name == "SchoolDistrictIntent":
             return find_closest_school_district(mycity_request)
+<<<<<<< HEAD
         elif mycity_request.intent_name == "VotingPrecinctIntent":
             return get_voting_precinct(mycity_request)
         elif mycity_request.intent_name == "AMAZON.FallbackIntent":
             return get_fallback_intent_response(mycity_request)
         elif mycity_request.intent_name == "AMAZON.StopIntent":
             return handle_session_end_request(mycity_request)
+=======
+        elif mycity_request.intent_name == "AMAZON.FallbackIntent":
+            return get_fallback_intent_response(mycity_request)
+>>>>>>> 148d4b8bb566b6bbac6326dcd5cb9174dc68589f
         else:
             raise ValueError("Invalid Intent")
     except BaseOutputSpeechError as e:
