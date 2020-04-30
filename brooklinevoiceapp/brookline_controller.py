@@ -6,12 +6,19 @@ import logging
 
 from mycity.intents.police_station_intent import find_closest_police_station
 from mycity.intents.library_intent import find_closest_library
+from mycity.intents.voting_precinct_intent import get_voting_precinct
 from mycity.intents.trash_day_intent import get_trash_pickup_info
 from mycity.intents.school_district_intent import find_closest_school_district
+from mycity.intents.fallback_intent import get_fallback_intent_response
 from mycity.mycity_response_data_model import MyCityResponseDataModel
 from mycity.utils.exceptions import BaseOutputSpeechError
 
 logger = logging.getLogger(__name__)
+
+
+LAUNCH_SPEECH = "Welcome to the Brookline Info skill. How can I help you?"
+LAUNCH_REPROMPT_SPEECH = "You can ask about the nearest city services."
+NO_REQUEST_SPEECH = "Hello from Brookline! We do not support that yet"
 
 
 def execute_request(mycity_request):
@@ -32,7 +39,7 @@ def execute_request(mycity_request):
         response = on_session_ended(mycity_request)
     else:
         response = MyCityResponseDataModel()
-        response.output_speech = "Hello from Brookline! We do not support that yet"
+        response.output_speech = NO_REQUEST_SPEECH
 
     response.session_attributes = mycity_request.session_attributes
     return response
@@ -69,14 +76,12 @@ def get_welcome_response(mycity_request):
     mycity_response = MyCityResponseDataModel()
     mycity_response.session_attributes = mycity_request.session_attributes
     mycity_response.card_title = "Welcome"
-    mycity_response.output_speech = \
-        "Welcome to the Brookline Info skill. How can I help you? "
+    mycity_response.output_speech = LAUNCH_SPEECH
 
     # If the user either does not reply to the welcome message or says
     # something that is not understood, they will be prompted again with
     # this text.
-    mycity_response.reprompt_text = \
-        "You can ask about the nearest city services."
+    mycity_response.reprompt_text = LAUNCH_REPROMPT_SPEECH
     mycity_response.should_end_session = False
     return mycity_response
 
@@ -115,9 +120,34 @@ def on_intent(mycity_request):
             return find_closest_library(mycity_request)
         elif mycity_request.intent_name == "SchoolDistrictIntent":
             return find_closest_school_district(mycity_request)
+        elif mycity_request.intent_name == "VotingPrecinctIntent":
+            return get_voting_precinct(mycity_request)
+        elif mycity_request.intent_name == "AMAZON.FallbackIntent":
+            return get_fallback_intent_response(mycity_request)
+        elif mycity_request.intent_name == "AMAZON.StopIntent":
+            return handle_session_end_request(mycity_request)
         else:
             raise ValueError("Invalid Intent")
     except BaseOutputSpeechError as e:
         response = on_session_ended(mycity_request)
         response.output_speech = e.output_speech
         return response
+
+
+def handle_session_end_request(mycity_request):
+    """
+    Ends a user's session (with the Brookline Info skill).
+    Called when request intent is AMAZON.StopIntent.
+
+    :param mycity_request: MyCityRequestDataModel object
+    :return: MyCityResponseDataModel object that will end a user's session
+    """
+    logger.debug('Closing')
+    mycity_response = MyCityResponseDataModel()
+    mycity_response.session_attributes = mycity_request.session_attributes
+    mycity_response.card_title = "Brookline Info - Thanks"
+    mycity_response.output_speech = \
+        "Thank you for using the Brookline Info skill. " \
+        "See you next time!"
+    mycity_response.should_end_session = True
+    return mycity_response
