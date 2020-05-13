@@ -510,8 +510,7 @@ GET_SCHOOL_DISTRICT_API_MOCK = {
                 "LASTEDITOR": None
             },
             "geometry": {
-                "x": -7920615.96685251,
-                "y": 5205180.75934551
+                "rings": [[[-7920615.96685251,5205180.75934551]]]
             }
         }
     ]

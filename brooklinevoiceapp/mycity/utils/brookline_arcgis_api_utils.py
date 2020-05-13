@@ -42,6 +42,7 @@ class MapFeatureID(Enum):
 class NonSortedFeatures(Enum):
     """Brookline GIS feature types that shouldn't be sorted"""
     TRASH_DAY = 12
+    SCHOOL_DISTRICT = 16
     VOTING_PRECINCT = 20
 
 
@@ -185,7 +186,7 @@ def get_sorted_library_json(address: str,
 
     return _get_sorted_features_json(address, MapFeatureID.LIBRARY, geometry_params, home_address)
 
-def get_sorted_school_district_json(address: str,
+def get_school_district_json(address: str,
                             _get_sorted_features_json: callable = get_sorted_features_json,
                             _geocode_address: callable = geocode_address) -> object:
     """
@@ -202,8 +203,8 @@ def get_sorted_school_district_json(address: str,
         del home_address['z']
 
     geometry_params = {
-        SPATIAL_REL_PARAM: "esriSpatialRelIntersects",
-        GEOMETRY_TYPE_PARAM: "esriGeometryPolygon",
+        SPATIAL_REL_PARAM: "esriSpatialRelWithin",
+        GEOMETRY_TYPE_PARAM: "esriGeometryPoint",
         GEOMETRY_PARAM: coordinates,
     }
 

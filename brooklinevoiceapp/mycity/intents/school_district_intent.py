@@ -5,7 +5,7 @@ import logging
 from mycity.intents import intent_constants
 from mycity.mycity_response_data_model import MyCityResponseDataModel
 from mycity.utils.address_utils import set_address_in_session
-from mycity.utils.brookline_arcgis_api_utils import get_sorted_school_district_json
+from mycity.utils.brookline_arcgis_api_utils import get_school_district_json
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +52,7 @@ def _get_output_speech_for_address(address):
     """
 
     logger.debug("Getting response for address " + str(address))
-    features = get_sorted_school_district_json(address)
+    features = get_school_district_json(address)
     logger.debug("school district response:", features)
 
     try:
