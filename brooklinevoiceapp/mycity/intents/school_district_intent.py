@@ -57,7 +57,6 @@ def _get_output_speech_for_address(address):
 
     try:
         first_feature = features[0]
-        logger.debug(first_feature)
         facility_name = first_feature[ATTRIBUTES_PATH][NAME_PATH]
     except IndexError:
         return intent_constants.NO_RESULTS_RESPONSE
