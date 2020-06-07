@@ -8,6 +8,7 @@ from mycity.intents.police_station_intent import find_closest_police_station
 from mycity.intents.library_intent import find_closest_library
 from mycity.intents.voting_precinct_intent import get_voting_precinct
 from mycity.intents.trash_day_intent import get_trash_pickup_info
+from mycity.intents.school_district_intent import find_closest_school_district
 from mycity.intents.fallback_intent import get_fallback_intent_response
 from mycity.mycity_response_data_model import MyCityResponseDataModel
 from mycity.utils.exceptions import BaseOutputSpeechError
@@ -117,6 +118,8 @@ def on_intent(mycity_request):
             return get_trash_pickup_info(mycity_request)
         elif mycity_request.intent_name == "LibraryIntent":
             return find_closest_library(mycity_request)
+        elif mycity_request.intent_name == "SchoolDistrictIntent":
+            return find_closest_school_district(mycity_request)
         elif mycity_request.intent_name == "VotingPrecinctIntent":
             return get_voting_precinct(mycity_request)
         elif mycity_request.intent_name == "AMAZON.FallbackIntent":

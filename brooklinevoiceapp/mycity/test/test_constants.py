@@ -488,3 +488,43 @@ GET_LIBRARY_API_MOCK = {
         }
     ]
 }
+
+GET_SCHOOL_DISTRICT_API_MOCK = {
+    "displayFieldName": "NAME",
+    "fieldAliases": {
+        "OBJECTID": "OBJECTID",
+        "NAME": "School Name",
+        "DISTRCTNAME": "School District Name",
+        "SCHOOLAREA": "Area in Square Miles",
+        "LASTUPDATE": "Last Update Date",
+        "LASTEDITOR": "Last Editor"
+    },
+    "features": [
+        {
+            "attributes": {
+                "OBJECTID": 1,
+                "NAME": "Brookline School",
+                "DISTRCTNAME": "Brookline",
+                "SCHOOLAREA": "1",
+                "LASTUPDATE": None,
+                "LASTEDITOR": None
+            },
+            "geometry": {
+                "rings": [[[-7920615.96685251,5205180.75934551]]]
+            }
+        }
+    ]
+}
+
+NO_RESULTS_GET_SCHOOL_DISTRICT_API_MOCK = {
+    "displayFieldName": "NAME",
+    "fieldAliases": {
+        "OBJECTID": "OBJECTID",
+        "NAME": "School Name",
+        "DISTRCTNAME": "School District Name",
+        "SCHOOLAREA": "Area in Square Miles",
+        "LASTUPDATE": "Last Update Date",
+        "LASTEDITOR": "Last Editor"
+    },
+    "features": []
+}
